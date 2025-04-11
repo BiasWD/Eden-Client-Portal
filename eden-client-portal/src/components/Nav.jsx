@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { auth } from "../firebase";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 
-function Nav(  ) {
+function Nav( { userName } ) {
 
   const [currentUser, setCurrentUser] = useState(null);
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ function Nav(  ) {
       <span className="text-xl font-bold">Client Portal</span>
     </div>
     <div>
-      { auth.currentUser ? <><span> {auth.currentUser.email} </span> <span onClick={handleSignOut} className="text-[#7BD650] hover:underline ml-4">Sign out </span></> : <Link to= "/login"> <span className="text-[#7BD650] hover:underline">Log In </span></Link> }
+      { userName ? <><span> {userName} </span> <span onClick={handleSignOut} className="text-[#7BD650] hover:underline ml-4">Sign out </span></> : <Link to= "/login"> <span className="text-[#7BD650] hover:underline">Log In </span></Link> }
     </div>
   </nav>
   )

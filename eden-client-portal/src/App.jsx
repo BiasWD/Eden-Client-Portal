@@ -14,7 +14,7 @@ import { onAuthStateChanged } from "firebase/auth";
 function App() {
   const [userName, setUserName] = useState("");
   const [serviceData, setServiceData] = useState([]);
-  const [invoiceData, setInvoiceData] = useState([]);
+  const [invoices, setInvoices] = useState([]);
   const [pricePerMowTrim, setPricePerMowTrim] = useState(0);
 
   useEffect(() => {
@@ -29,6 +29,7 @@ function App() {
 
           if (!querySnapshot.empty) {
             const clientData = querySnapshot.docs[0].data();
+            setInvoices(clientData.invoices || []);
             setUserName(clientData.name);
             console.log("Client data:", clientData);
           } else {
@@ -57,7 +58,7 @@ function App() {
           <div className="h-full w-5/6 ml-auto p-8">
             <Routes>
               <Route path="/" element={<Dashboard />} />
-              <Route path="/payments" element={<Payments />} />
+              <Route path="/payments" element={<Payments invoices={invoices}/>} />
               <Route path="/services" element={<Services />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/login" element={<Login />} />
