@@ -76,12 +76,11 @@ function Payments({ invoices }) {
 
       <div className="w-full mt-8 flex flex-row gap-8">
         <div className="shadow-xl flex flex-col flex-1">
-          <div className="text-xl text-white py-4 px-8 bg-[#00954C] font-bold">
+          <div className="text-xl text-white py-4 px-8 bg-[#00954C]"><strong>Total Due: </strong>${totalDue} </div>
+          <div className="text-xl py-4 px-8 text-[#00954C] font-bold">
             Billing History
           </div>
-
           <>{invoiceDivs}</>
-          <div>Total Due: {totalDue} </div>
         </div>
       </div>
     </div>

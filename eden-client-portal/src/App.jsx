@@ -29,6 +29,8 @@ function App() {
 
           if (!querySnapshot.empty) {
             const clientData = querySnapshot.docs[0].data();
+            setPricePerMowTrim(clientData.priceMowTrim || "undefined");
+            setServiceData(clientData.serviceHistory || []);
             setInvoices(clientData.invoices || []);
             setUserName(clientData.name);
             console.log("Client data:", clientData);
@@ -57,9 +59,9 @@ function App() {
           <Sidebar />
           <div className="h-full w-5/6 ml-auto p-8">
             <Routes>
-              <Route path="/" element={<Dashboard />} />
+              <Route path="/" element={<Dashboard invoices={invoices} serviceData={serviceData} userName={userName}/>} />
               <Route path="/payments" element={<Payments invoices={invoices}/>} />
-              <Route path="/services" element={<Services />} />
+              <Route path="/services" element={<Services serviceData={serviceData} pricePerMowTrim={pricePerMowTrim}/>} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/login" element={<Login />} />
             </Routes>
