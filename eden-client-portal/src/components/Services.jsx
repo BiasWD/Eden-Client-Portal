@@ -1,7 +1,7 @@
 import React from "react";
+import { FaLock } from "react-icons/fa6";
 
-function Services( {serviceData, pricePerMowTrim } ) {
-
+function Services({ serviceData, pricePerMowTrim, userName }) {
   const sortedServices = [...serviceData].sort(
     (a, b) => b.date.toDate() - a.date.toDate()
   );
@@ -11,12 +11,8 @@ function Services( {serviceData, pricePerMowTrim } ) {
       key={index}
       className="py-4 px-8 flex flex-row items-center border-t border-[#7BD650] gap-2 text-sm md:text-base"
     >
-      <div className="flex-1">
-        <span className="font-bold">Service:</span> {service.type}
-      </div>
-      <div className="flex-1">
-        <span className="font-bold">Date Completed:</span> {service.date.toDate().toLocaleDateString()}
-      </div>
+      <div className="flex-1 font-bold text-stone-700">{service.type}</div>
+      <div className="flex-1">{service.date.toDate().toLocaleDateString()}</div>
     </div>
   ));
 
@@ -25,17 +21,45 @@ function Services( {serviceData, pricePerMowTrim } ) {
       <h1 className="text-3xl text-[#00954C] font-bold m-4">Services</h1>
       <p>Services will be listed here when completed.</p>
       <p>
-        <strong>Note:</strong> The current base price for mowing and trimming your lawn is <strong>${pricePerMowTrim}</strong> per service.
+        <strong>Note:</strong> The current base price for mowing and trimming
+        your lawn{" "}
+        {userName ? (
+          <span>
+            is <strong>${pricePerMowTrim}</strong> per service
+          </span>
+        ) : (
+          "will also be listed here"
+        )}
+        .
       </p>
       <div className="w-full mt-8 flex flex-row gap-8">
-        <div className="shadow-xl flex flex-col flex-1">
-          <div className="text-xl text-white py-4 px-8 bg-[#00954C] font-bold">
-            Service History
+        {userName ? (
+          <div className="shadow-xl flex flex-col flex-1 border-[#00954C] border-2">
+            <div className="text-xl text-white py-4 px-8 bg-[#00954C] font-bold">
+              Service History
+            </div>
+            <div className="py-4 px-8 flex flex-row items-center gap-2 bg-stone-200 text-stone-900 text-md md:text-lg">
+              <div className="flex-1">
+                <span className="font-bold">Service</span>
+              </div>
+              <div className="flex-1">
+                <span className="font-bold">Date Completed</span>
+              </div>
+            </div>
+            <>{serviceDivs}</>
           </div>
-
-          <>{serviceDivs}</>
-
-        </div>
+        ) : (
+          <div className="shadow-xl flex flex-col flex-1 border-stone-500 font-bold text-xl text-stone-500 border-2  bg-white">
+            <div className="text-xl text-white py-4 px-8 flex items-center bg-stone-500 font-bold">
+              <FaLock />
+              <span className="pl-2">Service History</span>
+            </div>
+            <div className="py-4 px-8">
+              {" "}
+              Please log in to view your service history.
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,5 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import { FaLock } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 function Dashboard({ invoices, serviceData, userName }) {
   const [totalDue, setTotalDue] = useState(0);
@@ -19,44 +21,81 @@ function Dashboard({ invoices, serviceData, userName }) {
     calculateTotalDue();
   }, [invoices]);
 
-  const sortedRecentServices = [...serviceData].sort(
-    (a, b) => b.date.toDate() - a.date.toDate()
-  ).slice(0, 3);
+  const sortedRecentServices = [...serviceData]
+    .sort((a, b) => b.date.toDate() - a.date.toDate())
+    .slice(0, 3);
 
   return (
     <div className="flex max-w-[1080px] mx-auto items-center flex-col">
       <h1 className="text-3xl text-[#00954C] font-bold m-4">Dashboard</h1>
-      <p>Hi {userName}, Welcome to your dashboard!</p>
-      <div className="shadow-xl flex w-full mt-8">
-        <div className="text-xl text-center text-white bg-[#00954C] p-4 font-bold">
+      {userName ? (
+        <p>Hi {userName}, Welcome to your dashboard!</p>
+      ) : (
+        <p>Log in or sign up to view your dashboard.</p>
+      )}
+      <div className="shadow-xl flex w-full border-[#7BD650] border-2 mt-8">
+        <div className="text-xl text-center text-white bg-[#7BD650] p-4 font-bold">
           Announcements
         </div>
         <p className=" p-4 text-xl align-center">No new announcements</p>
       </div>
-      <div className="w-full mt-8 flex flex-row gap-8">
-        <div className="shadow-xl flex flex-col flex-1">
-          <div className="text-xl text-center text-white p-4 bg-[#00954C] font-bold">
-            Amount Due
-          </div>
-          <p className=" p-8 text-xl text-center">
-            <strong>${totalDue}</strong>
-          </p>
-        </div>
-        <div className="shadow-xl flex flex-col flex-1">
-          <div className="text-xl text-center text-white p-4 bg-[#00954C] font-bold">
-            Recent Services
-          </div>
 
-          <ul className="p-8 list-disc">
-            {sortedRecentServices.map((service, index) => (
-              <li key={index}>
-                <strong>{service.type}</strong> on{" "}
-                {service.date.toDate().toLocaleDateString()}
-              </li>
-            ))}
-          </ul>
+      {userName ? (
+        <div className="w-full mt-8 flex flex-row gap-8">
+          <div className="shadow-xl border-[#00954C] border-2 flex flex-col flex-1 justify-between">
+            <div className="text-xl text-center text-white p-4 bg-[#00954C] font-bold">
+              Amount Due
+            </div>
+            <p className=" p-8 text-xl text-center">
+              <strong>${totalDue}</strong>
+            </p>
+            <Link className="w-fit mb-4 mx-auto" to="/payments">
+              <button className="bg-[#00954C]  text-white flex rounded-md cursor-pointer p-2 px-6 hover:bg-[#7BD650] transition duration-300">
+                Payments
+              </button>
+            </Link>
+          </div>
+          <div className="shadow-xl border-[#00954C] border-2 flex flex-col flex-1">
+            <div className="text-xl text-center text-white p-4 bg-[#00954C] font-bold">
+              Recent Services
+            </div>
+
+            <ul className="p-8 list-disc">
+              {sortedRecentServices.map((service, index) => (
+                <li key={index}>
+                  <strong>{service.type}</strong> on{" "}
+                  {service.date.toDate().toLocaleDateString()}
+                </li>
+              ))}
+            </ul>
+            <Link className="w-fit mb-4 mx-auto" to="/services">
+              <button className="bg-[#00954C] text-white flex cursor-pointer rounded-md p-2 px-6 hover:bg-[#7BD650] transition duration-300">
+                Services
+              </button>
+            </Link>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="w-full mt-8 flex flex-row gap-8">
+          <div className="shadow-xl flex flex-col flex-1 border-stone-500 font-bold text-xl text-stone-500 border-2  bg-white">
+            <div className="text-xl text-white py-4 px-8 flex items-center bg-stone-500 font-bold">
+              <FaLock />
+              <span className="pl-2">Amount Due</span>
+            </div>
+            <div className="py-4 px-8">
+              {" "}
+              Please log in to view your dashboard.
+            </div>
+          </div>
+          <div className="shadow-xl flex flex-col flex-1 border-stone-500 font-bold text-xl text-stone-500 border-2  bg-white">
+            <div className="text-xl text-white py-4 px-8 flex items-center bg-stone-500 font-bold">
+              <FaLock />
+              <span className="pl-2">Recent Services</span>
+            </div>
+            <div className="py-4 px-8"> </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

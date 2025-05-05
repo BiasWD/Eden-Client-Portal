@@ -1,7 +1,8 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import { FaLock } from "react-icons/fa6";
 
-function Payments({ invoices }) {
+function Payments({ invoices, userName }) {
   const today = new Date();
 
   const [totalDue, setTotalDue] = useState(0);
@@ -31,13 +32,10 @@ function Payments({ invoices }) {
       className="py-4 px-8 flex flex-row items-center border-t border-[#7BD650] gap-2 text-sm md:text-base"
     >
       <div className="flex-1">
-        <span className="font-bold">{invoice.description}</span>
+        <span className="font-bold text-stone-700">{invoice.description}</span>
       </div>
+      <div className="flex-1">${invoice.amount}</div>
       <div className="flex-1">
-        <span className="font-bold">Amount:</span> ${invoice.amount}
-      </div>
-      <div className="flex-1">
-        <span className="font-bold">Status:</span>{" "}
         <span
           className={
             invoice.dueDate.toDate() < today
@@ -59,7 +57,6 @@ function Payments({ invoices }) {
         </span>
       </div>
       <div className="flex-1">
-        <span className="font-bold">Due:</span>{" "}
         {invoice.dueDate.toDate().toLocaleDateString()}
       </div>
     </div>
@@ -75,13 +72,42 @@ function Payments({ invoices }) {
       </p>
 
       <div className="w-full mt-8 flex flex-row gap-8">
-        <div className="shadow-xl flex flex-col flex-1">
-          <div className="text-xl text-white py-4 px-8 bg-[#00954C]"><strong>Total Due: </strong>${totalDue} </div>
-          <div className="text-xl py-4 px-8 text-[#00954C] font-bold">
-            Billing History
+        {userName ? (
+          <div className="shadow-xl flex flex-col flex-1 border-[#00954C] border-2  bg-white">
+            <div className="text-xl text-white py-4 px-8 bg-[#00954C] font-bold">
+              Billing History
+            </div>
+            <div className="text-xl py-4 px-8 font-bold bg-stone-200 text-stone-900">
+              <strong>Total Due: </strong>${totalDue}
+            </div>
+            <div className="py-4 px-8 flex flex-row items-center gap-2 bg-stone-200 text-stone-900 text-md md:text-lg">
+              <div className="flex-1">
+                <span className="font-bold">Description</span>
+              </div>
+              <div className="flex-1">
+                <span className="font-bold">Amount</span>
+              </div>
+              <div className="flex-1">
+                <span className="font-bold">Status</span>
+              </div>
+              <div className="flex-1">
+                <span className="font-bold">Due Date</span>
+              </div>
+            </div>
+            <>{invoiceDivs}</>
           </div>
-          <>{invoiceDivs}</>
-        </div>
+        ) : (
+          <div className="shadow-xl flex flex-col flex-1 border-stone-500 font-bold text-xl text-stone-500 border-2  bg-white">
+            <div className="text-xl text-white py-4 px-8 flex items-center bg-stone-500 font-bold">
+              <FaLock />
+              <span className="pl-2">Billing History</span>
+            </div>
+            <div className="py-4 px-8">
+              {" "}
+              Please log in to view your payment history.
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
