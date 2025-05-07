@@ -1,9 +1,9 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { FaLock } from "react-icons/fa6";
+import { FaLock, FaArrowRight } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
-function Dashboard({ invoices, serviceData, userName }) {
+function Dashboard({ invoices, serviceData, userName, hasClientData }) {
   const [totalDue, setTotalDue] = useState(0);
 
   useEffect(() => {
@@ -29,7 +29,27 @@ function Dashboard({ invoices, serviceData, userName }) {
     <div className="flex max-w-[1080px] mx-auto items-center flex-col">
       <h1 className="text-3xl text-[#00954C] font-bold m-4">Dashboard</h1>
       {userName ? (
-        <p>Hi {userName}, Welcome to your dashboard!</p>
+        <>
+          <p>Hi {userName}, Welcome to your dashboard!</p>
+          {!hasClientData ? (
+            <p>
+              <strong>Note:</strong> It looks like we don't have any client data
+              for you yet. Please allow time for us to add you to the database
+              or{" "}
+              <a
+                className="font-bold text-[#00954C] underline hover:text-[#7BD650] transition-colors"
+                href="https://edenrootslawncare.com/contact.html"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Contact Us
+              </a>
+              .
+            </p>
+          ) : (
+            ""
+          )}
+        </>
       ) : (
         <p>Log in or sign up to view your dashboard.</p>
       )}
@@ -50,12 +70,13 @@ function Dashboard({ invoices, serviceData, userName }) {
               <strong>${totalDue}</strong>
             </p>
             <Link className="w-fit mb-4 mx-auto" to="/payments">
-              <button className="bg-[#00954C]  text-white flex rounded-md cursor-pointer p-2 px-6 hover:bg-[#7BD650] transition duration-300">
-                Payments
+              <button className="bg-[#00954C] text-white flex items-center gap-2 cursor-pointer rounded-md p-2 px-6 hover:bg-[#7BD650] transition duration-300">
+                <FaArrowRight />
+                <span>Payments</span>
               </button>
             </Link>
           </div>
-          <div className="shadow-xl border-[#00954C] border-2 flex flex-col flex-1">
+          <div className="shadow-xl border-[#00954C] border-2 flex flex-col justify-between flex-1">
             <div className="text-xl text-center text-white p-4 bg-[#00954C] font-bold">
               Recent Services
             </div>
@@ -69,8 +90,9 @@ function Dashboard({ invoices, serviceData, userName }) {
               ))}
             </ul>
             <Link className="w-fit mb-4 mx-auto" to="/services">
-              <button className="bg-[#00954C] text-white flex cursor-pointer rounded-md p-2 px-6 hover:bg-[#7BD650] transition duration-300">
-                Services
+              <button className="bg-[#00954C] text-white flex items-center gap-2 cursor-pointer rounded-md p-2 px-6 hover:bg-[#7BD650] transition duration-300">
+                <FaArrowRight />
+                <span>Services</span>
               </button>
             </Link>
           </div>

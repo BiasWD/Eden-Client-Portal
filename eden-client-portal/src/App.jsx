@@ -16,10 +16,13 @@ function App() {
   const [serviceData, setServiceData] = useState([]);
   const [invoices, setInvoices] = useState([]);
   const [pricePerMowTrim, setPricePerMowTrim] = useState(0);
+  const [hasClientData, setHasClientData] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
+        setUserName(user.displayName || user.email || "");
+
         const uid = user.uid;
 
         try {
@@ -29,10 +32,10 @@ function App() {
 
           if (!querySnapshot.empty) {
             const clientData = querySnapshot.docs[0].data();
+            setHasClientData(true);
             setPricePerMowTrim(clientData.priceMowTrim || "undefined");
             setServiceData(clientData.serviceHistory || []);
             setInvoices(clientData.invoices || []);
-            setUserName(clientData.name);
             console.log("Client data loaded:", clientData);
           } else {
             console.log("No client data found for this user.");
@@ -42,7 +45,8 @@ function App() {
         }
       } else {
         console.log("User logged out – clearing all client data");
-        // ✅ Clear all state on logout
+        // Clear all state on logout
+        setHasClientData(false);
         setUserName("");
         setPricePerMowTrim("undefined");
         setServiceData([]);
@@ -64,6 +68,7 @@ function App() {
                 path="/"
                 element={
                   <Dashboard
+                    hasClientData={hasClientData}
                     invoices={invoices}
                     serviceData={serviceData}
                     userName={userName}
@@ -81,6 +86,7 @@ function App() {
                     serviceData={serviceData}
                     pricePerMowTrim={pricePerMowTrim}
                     userName={userName}
+                    hasClientData={hasClientData}
                   />
                 }
               />

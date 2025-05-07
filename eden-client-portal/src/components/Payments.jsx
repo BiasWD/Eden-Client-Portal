@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { FaLock } from "react-icons/fa6";
-
+import { FaLock, FaArrowLeft } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 function Payments({ invoices, userName }) {
   const today = new Date();
 
@@ -71,31 +71,41 @@ function Payments({ invoices, userName }) {
         We will change it manually once received.
       </p>
 
-      <div className="w-full mt-8 flex flex-row gap-8">
+      <div className="w-full mt-8 flex flex-col gap-8">
         {userName ? (
-          <div className="shadow-xl flex flex-col flex-1 border-[#00954C] border-2  bg-white">
-            <div className="text-xl text-white py-4 px-8 bg-[#00954C] font-bold">
-              Billing History
+          <>
+            <div className="shadow-xl flex flex-col flex-1 border-[#00954C] border-2  bg-white">
+              <div className="text-xl text-white py-4 px-8 bg-[#00954C] font-bold">
+                Billing History
+              </div>
+              <div className="text-xl py-4 px-8 font-bold bg-stone-200 text-stone-900">
+                <strong>Total Due: </strong>${totalDue}
+              </div>
+              <div className="py-4 px-8 flex flex-row items-center gap-2 bg-stone-200 text-stone-900 text-md md:text-lg">
+                <div className="flex-1">
+                  <span className="font-bold">Description</span>
+                </div>
+                <div className="flex-1">
+                  <span className="font-bold">Amount</span>
+                </div>
+                <div className="flex-1">
+                  <span className="font-bold">Status</span>
+                </div>
+                <div className="flex-1">
+                  <span className="font-bold">Due Date</span>
+                </div>
+              </div>
+              <>{invoiceDivs}</>
             </div>
-            <div className="text-xl py-4 px-8 font-bold bg-stone-200 text-stone-900">
-              <strong>Total Due: </strong>${totalDue}
+            <div className="w-full flex">
+              <Link className="w-fit my-4 mx-auto" to="/">
+                <button className="bg-[#00954C]  text-white flex flex-row rounded-md cursor-pointer items-center gap-2 p-2 px-6 hover:bg-[#7BD650] transition duration-300">
+                  <span>Dashboard</span>
+                  <FaArrowLeft />
+                </button>
+              </Link>
             </div>
-            <div className="py-4 px-8 flex flex-row items-center gap-2 bg-stone-200 text-stone-900 text-md md:text-lg">
-              <div className="flex-1">
-                <span className="font-bold">Description</span>
-              </div>
-              <div className="flex-1">
-                <span className="font-bold">Amount</span>
-              </div>
-              <div className="flex-1">
-                <span className="font-bold">Status</span>
-              </div>
-              <div className="flex-1">
-                <span className="font-bold">Due Date</span>
-              </div>
-            </div>
-            <>{invoiceDivs}</>
-          </div>
+          </>
         ) : (
           <div className="shadow-xl flex flex-col flex-1 border-stone-500 font-bold text-xl text-stone-500 border-2  bg-white">
             <div className="text-xl text-white py-4 px-8 flex items-center bg-stone-500 font-bold">

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
 import { signOut, onAuthStateChanged } from "firebase/auth";
+import { FaUserCircle } from "react-icons/fa";
 
 function Nav({ userName }) {
   const [currentUser, setCurrentUser] = useState(null);
@@ -36,6 +37,8 @@ function Nav({ userName }) {
       <div>
         {userName ? (
           <>
+            <div className="flex items-center">
+            <FaUserCircle className="text-2xl mx-2" />
             <span> {userName} </span>{" "}
             <span
               onClick={handleSignOut}
@@ -43,6 +46,7 @@ function Nav({ userName }) {
             >
               Sign out{" "}
             </span>
+            </div>
           </>
         ) : (
           <Link to="/login">
