@@ -41,7 +41,7 @@ function Payments({ invoices, userName }) {
             invoice.dueDate.toDate() < today
               ? invoice.isPaid === true
                 ? "text-[#00954C]"
-                : "text-red-500"
+                : "text-red-500 font-bold"
               : invoice.isPaid === true
               ? "text-[#00954C]"
               : "text-yellow-500"
@@ -74,7 +74,7 @@ function Payments({ invoices, userName }) {
       <div className="w-full mt-8 flex flex-col gap-8">
         {userName ? (
           <>
-            <div className="shadow-xl flex flex-col flex-1 border-[#00954C] border-2  bg-white">
+            <div className="shadow-xl flex flex-col flex-1 border-[#00954C] border-1 rounded-lg overflow-hidden bg-white">
               <div className="text-xl text-white py-4 px-8 bg-[#00954C] font-bold">
                 Billing History
               </div>
@@ -107,7 +107,7 @@ function Payments({ invoices, userName }) {
             </div>
           </>
         ) : (
-          <div className="shadow-xl flex flex-col flex-1 border-stone-500 font-bold text-xl text-stone-500 border-2  bg-white">
+          <div className="shadow-xl flex flex-col flex-1 border-stone-500 font-bold text-xl text-stone-500 border-1 rounded-lg overflow-hidden bg-white">
             <div className="text-xl text-white py-4 px-8 flex items-center bg-stone-500 font-bold">
               <FaLock />
               <span className="pl-2">Billing History</span>

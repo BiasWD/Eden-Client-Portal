@@ -13,17 +13,55 @@ function Login() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [googleIsLoading, setGoogleIsLoading] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [loginError, setLoginError] = useState("");
+
+  const validateLogin = ({ email, password }) => {
+    const errors = {};
+
+    if (!email.trim()) {
+      errors.email = "Please enter your email";
+    } else if (!/\S+@\S+\.\S+/.test(email.trim())) {
+      errors.email = "Email is invalid";
+    }
+    if (!password) {
+      errors.password = "Please enter your password";
+    }
+    return errors;
+  };
 
   const signIn = async (e) => {
     e.preventDefault();
+
+    const validationErrors = validateLogin({
+      email,
+      password,
+    });
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    } else {
+      setErrors({});
+    }
     setIsLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, email.trim(), password);
       console.log("Login successful");
       navigate("/");
     } catch (error) {
       console.error("Error logging in:", error.message);
-      alert(error.message);
+      if (error.code === "auth/invalid-credential") {
+        setLoginError("Invalid credential. Please try again.");
+      } else if (error.code === "auth/wrong-password") {
+        setLoginError("Incorrect password. Please try again.");
+      } else if (error.code === "auth/user-not-found") {
+        setLoginError("No account found with this email.");
+      } else if (error.code === "auth/too-many-requests") {
+        setLoginError("Too many attempts. Please try again later.");
+      } else {
+        setLoginError("Something went wrong. Please try again.");
+        console.error(error.message);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -82,21 +120,38 @@ function Login() {
               : "opacity-100"
           }`}
         >
-          <input
-            disabled={isLoading || googleIsLoading}
-            onChange={(e) => setEmail(e.target.value)}
-            className="border border-[#00954C] rounded-md p-2 mb-4"
-            type="email"
-            placeholder="Email"
-          />
-
-          <input
-            disabled={isLoading || googleIsLoading}
-            onChange={(e) => setPassword(e.target.value)}
-            className="border border-[#00954C] rounded-md p-2 mb-4"
-            type="password"
-            placeholder="Password"
-          />
+          <div className="relative mb-6">
+            <input
+              value={email}
+              onFocus={() => setLoginError("")}
+              disabled={isLoading || googleIsLoading}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full border border-[#00954C] rounded-md p-2"
+              type="email"
+              placeholder="Email"
+            />
+            {errors.email && (
+              <span className="absolute left-0 top-full text-red-500 text-sm">
+                {errors.email}
+              </span>
+            )}
+          </div>
+          <div className="relative mb-6">
+            <input
+              value={password}
+              onFocus={() => setLoginError("")}
+              disabled={isLoading || googleIsLoading}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full border border-[#00954C] rounded-md p-2"
+              type="password"
+              placeholder="Password"
+            />
+            {(errors.password || loginError) && (
+              <span className="absolute left-0 top-full text-red-500 text-sm">
+                {errors.password} {loginError}
+              </span>
+            )}
+          </div>
           {isLoading ? (
             <div className="bg-[#00954C] text-white rounded-md p-2 mb-4 transition duration-300">
               <MoonLoader color="white" size={18} className="mx-auto" />
@@ -105,7 +160,9 @@ function Login() {
             <button
               disabled={isLoading || googleIsLoading}
               onClick={signIn}
-              className="bg-[#00954C] text-white rounded-md p-2 mb-4 cursor-pointer hover:bg-[#7BD650] transition duration-300"
+              className={`bg-[#00954C] text-white rounded-md p-2 mb-4 cursor-pointer hover:bg-[#7BD650] transition-all duration-300 ${
+                loginError ? "mt-5" : ""
+              }`}
             >
               Sign In
             </button>
@@ -117,7 +174,12 @@ function Login() {
           ) : (
             <button
               disabled={isLoading || googleIsLoading}
-              onClick={signInWithGoogle}
+              onClick={() => {
+                signInWithGoogle();
+                setLoginError("");
+                setEmail("");
+                setPassword("");
+              }}
               className=" border-1 text-sm justify-center rounded-md mt-2 p-2 mb-4 hover:bg-stone-200 transition duration-300 flex items-center gap-2 cursor-pointer"
             >
               <span>Sign In with Google</span>

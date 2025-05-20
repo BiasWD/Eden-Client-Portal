@@ -36,7 +36,7 @@ function Services({ serviceData, pricePerMowTrim, userName, hasClientData }) {
       <div className="w-full mt-8 flex flex-col gap-8">
         {userName ? (
           <>
-            <div className="shadow-xl flex flex-col flex-1 border-[#00954C] border-2">
+            <div className="shadow-xl flex flex-col flex-1 border-[#00954C] border-1 rounded-lg overflow-hidden">
               <div className="text-xl text-white py-4 px-8 bg-[#00954C] font-bold">
                 Service History
               </div>
@@ -60,7 +60,7 @@ function Services({ serviceData, pricePerMowTrim, userName, hasClientData }) {
             </div>
           </>
         ) : (
-          <div className="shadow-xl flex flex-col flex-1 border-stone-500 font-bold text-xl text-stone-500 border-2  bg-white">
+          <div className="shadow-xl flex flex-col flex-1 border-stone-500 font-bold text-xl text-stone-500 border-1 rounded-lg overflow-hidden bg-white">
             <div className="text-xl text-white py-4 px-8 flex items-center bg-stone-500 font-bold">
               <FaLock />
               <span className="pl-2">Service History</span>

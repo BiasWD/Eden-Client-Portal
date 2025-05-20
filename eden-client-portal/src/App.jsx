@@ -12,22 +12,6 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import {
   ClipLoader,
-  PuffLoader,
-  FadeLoader,
-  RingLoader,
-  GridLoader,
-  BeatLoader,
-  HashLoader,
-  MoonLoader,
-  PropagateLoader,
-  PulseLoader,
-  BarLoader,
-  DotLoader,
-  CircleLoader,
-  BounceLoader,
-  SyncLoader,
-  ScaleLoader,
-  ClimbingBoxLoader,
 } from "react-spinners";
 
 function App() {

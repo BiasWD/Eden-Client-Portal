@@ -14,14 +14,62 @@ import { MoonLoader } from "react-spinners";
 function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [googleIsLoading, setGoogleIsLoading] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  const validateSignup = ({
+    firstName,
+    lastName,
+    email,
+    password,
+    confirmPassword,
+  }) => {
+    const errors = {};
+
+    if (!firstName.trim()) {
+      errors.firstName = "First name is required";
+    }
+    if (!lastName.trim()) {
+      errors.lastName = "Last name is required";
+    }
+    if (!email.trim()) {
+      errors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(email.trim())) {
+      errors.email = "Email is invalid";
+    }
+    if (!password) {
+      errors.password = "Password is required";
+    } else if (password.length < 6) {
+      errors.password = "Password must be at least 6 characters long";
+    }
+    if (password !== confirmPassword) {
+      errors.confirmPassword = "Passwords do not match";
+    }
+    return errors;
+  };
 
   const signUp = async (e) => {
     e.preventDefault();
+
+    const validationErrors = validateSignup({
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword,
+    });
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    } else {
+      setErrors({});
+    }
+
     setIsLoading(true);
 
     try {
@@ -101,43 +149,97 @@ function Signup() {
       <h1 className="text-3xl text-[#00954C] font-bold m-4">Sign Up</h1>
       <p>Please Sign up to continue</p>
 
-      <div className={`mt-8 flex flex-col transition-opacity duration-300 ${isLoading || googleIsLoading ? "opacity-50 pointer-events-none" : "opacity-100"}`}>
+      <div
+        className={`mt-8 flex flex-col transition-opacity duration-300 ${
+          isLoading || googleIsLoading
+            ? "opacity-50 pointer-events-none"
+            : "opacity-100"
+        }`}
+      >
+        <div className="flex flex-row gap-4">
+          <div className="relative mb-6">
+            <input
+            value={firstName}
+              disabled={isLoading || googleIsLoading}
+              onChange={(e) => setFirstName(e.target.value)}
+              className="w-full border border-[#00954C] rounded-md p-2"
+              type="text"
+              placeholder="First Name"
+            />
+            {errors.firstName && (
+              <span className="absolute left-0 top-full text-red-500 text-sm">
+                {errors.firstName}
+              </span>
+            )}
+          </div>
+          <div className="relative mb-6">
+            <input
+              value={lastName}
+              disabled={isLoading || googleIsLoading}
+              onChange={(e) => setLastName(e.target.value)}
+              className="w-full border border-[#00954C] rounded-md p-2"
+              type="text"
+              placeholder="Last Name"
+            />
+            {errors.lastName && (
+              <span className="absolute left-0 top-full text-red-500 text-sm">
+                {errors.lastName}
+              </span>
+            )}
+          </div>
+        </div>
+        <div className="relative mb-6">
+          <input
+            value={email}
+            disabled={isLoading || googleIsLoading}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full border border-[#00954C] rounded-md p-2"
+            type="email"
+            placeholder="Email"
+          />
+          {errors.email && (
+            <span className="absolute left-0 top-full text-red-500 text-sm">
+              {errors.email}
+            </span>
+          )}
+        </div>
+          <div className="relative mb-6">
         <input
+          value={password}
           disabled={isLoading || googleIsLoading}
-          onChange={(e) => setFirstName(e.target.value)}
-          className="border border-[#00954C] rounded-md p-2 mb-4"
-          type="text"
-          placeholder="First Name"
-        />
-        <input
-        disabled={isLoading || googleIsLoading}
-          onChange={(e) => setLastName(e.target.value)}
-          className="border border-[#00954C] rounded-md p-2 mb-4"
-          type="text"
-          placeholder="Last Name"
-        />
-        <input
-        disabled={isLoading || googleIsLoading}
-          onChange={(e) => setEmail(e.target.value)}
-          className="border border-[#00954C] rounded-md p-2 mb-4"
-          type="email"
-          placeholder="Email"
-        />
-
-        <input
-        disabled={isLoading || googleIsLoading}
           onChange={(e) => setPassword(e.target.value)}
-          className="border border-[#00954C] rounded-md p-2 mb-4"
+          className="w-full border border-[#00954C] rounded-md p-2"
           type="password"
           placeholder="Password"
         />
+        {errors.password && (
+          <span className="absolute left-0 top-full text-red-500 text-sm">
+            {errors.password}
+          </span>
+        )}
+        </div>
+        <div className="relative mb-6">
+        <input
+          value={confirmPassword}
+          disabled={isLoading || googleIsLoading}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          className="w-full border border-[#00954C] rounded-md p-2"
+          type="password"
+          placeholder="Confirm Password"
+        />
+        {errors.confirmPassword && (
+          <span className="absolute left-0 top-full text-red-500 text-sm">
+            {errors.confirmPassword}
+          </span>
+        )}
+        </div>
         {isLoading ? (
           <div className="bg-[#00954C] text-white rounded-md p-2 mb-2 transition duration-300">
             <MoonLoader color="white" size={18} className="mx-auto" />
           </div>
         ) : (
           <button
-          disabled={isLoading || googleIsLoading}
+            disabled={isLoading || googleIsLoading}
             onClick={signUp}
             className="bg-[#00954C] text-white rounded-md p-2 mb-2 hover:bg-[#7BD650] cursor-pointer transition duration-300"
           >
@@ -151,7 +253,7 @@ function Signup() {
           </div>
         ) : (
           <button
-          disabled={isLoading || googleIsLoading}
+            disabled={isLoading || googleIsLoading}
             onClick={signInWithGoogle}
             className=" border-1 text-sm justify-center rounded-md mt-2 p-2 mb-4 hover:bg-stone-200 transition duration-300 flex items-center gap-2 cursor-pointer"
           >

@@ -53,7 +53,7 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
       ) : (
         <p>Log in or sign up to view your dashboard.</p>
       )}
-      <div className="shadow-xl flex w-full border-[#7BD650] border-2 mt-8">
+      <div className="shadow-xl flex w-full border-[#7BD650] border-1 overflow-hidden rounded-lg mt-8">
         <div className="text-xl text-center text-white bg-[#7BD650] p-4 font-bold">
           Announcements
         </div>
@@ -62,7 +62,7 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
 
       {userName ? (
         <div className="w-full mt-8 flex flex-row gap-8">
-          <div className="shadow-xl border-[#00954C] border-2 flex flex-col flex-1 justify-between">
+          <div className="shadow-xl border-[#00954C] border-1 rounded-lg overflow-hidden flex flex-col flex-1 justify-between">
             <div className="text-xl text-center text-white p-4 bg-[#00954C] font-bold">
               Amount Due
             </div>
@@ -76,7 +76,7 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
               </button>
             </Link>
           </div>
-          <div className="shadow-xl border-[#00954C] border-2 flex flex-col justify-between flex-1">
+          <div className="shadow-xl border-[#00954C] border-1 rounded-lg overflow-hidden flex flex-col justify-between flex-1">
             <div className="text-xl text-center text-white p-4 bg-[#00954C] font-bold">
               Recent Services
             </div>
@@ -99,7 +99,7 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
         </div>
       ) : (
         <div className="w-full mt-8 flex flex-row gap-8">
-          <div className="shadow-xl flex flex-col flex-1 border-stone-500 font-bold text-xl text-stone-500 border-2  bg-white">
+          <div className="shadow-xl flex flex-col flex-1 border-stone-500 font-bold text-xl text-stone-500 rounded-lg overflow-hidden border-1  bg-white">
             <div className="text-xl text-white py-4 px-8 flex items-center bg-stone-500 font-bold">
               <FaLock />
               <span className="pl-2">Amount Due</span>
@@ -109,7 +109,7 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
               Please log in to view your dashboard.
             </div>
           </div>
-          <div className="shadow-xl flex flex-col flex-1 border-stone-500 font-bold text-xl text-stone-500 border-2  bg-white">
+          <div className="shadow-xl flex flex-col flex-1 border-stone-500 font-bold text-xl text-stone-500 rounded-lg overflow-hidden border-1  bg-white">
             <div className="text-xl text-white py-4 px-8 flex items-center bg-stone-500 font-bold">
               <FaLock />
               <span className="pl-2">Recent Services</span>
