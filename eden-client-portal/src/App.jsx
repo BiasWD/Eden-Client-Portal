@@ -10,6 +10,25 @@ import Signup from "./components/Signup";
 import { auth, db } from "./firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
+import {
+  ClipLoader,
+  PuffLoader,
+  FadeLoader,
+  RingLoader,
+  GridLoader,
+  BeatLoader,
+  HashLoader,
+  MoonLoader,
+  PropagateLoader,
+  PulseLoader,
+  BarLoader,
+  DotLoader,
+  CircleLoader,
+  BounceLoader,
+  SyncLoader,
+  ScaleLoader,
+  ClimbingBoxLoader,
+} from "react-spinners";
 
 function App() {
   const [userName, setUserName] = useState("");
@@ -17,9 +36,12 @@ function App() {
   const [invoices, setInvoices] = useState([]);
   const [pricePerMowTrim, setPricePerMowTrim] = useState(0);
   const [hasClientData, setHasClientData] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      setIsLoading(true);
+
       if (user) {
         setUserName(user.displayName || user.email || "");
 
@@ -52,6 +74,8 @@ function App() {
         setServiceData([]);
         setInvoices([]);
       }
+
+      setIsLoading(false);
     });
 
     return () => unsubscribe();
@@ -67,27 +91,62 @@ function App() {
               <Route
                 path="/"
                 element={
-                  <Dashboard
-                    hasClientData={hasClientData}
-                    invoices={invoices}
-                    serviceData={serviceData}
-                    userName={userName}
-                  />
+                  isLoading ? (
+                    <div className="flex max-w-[1080px] mx-auto items-center flex-col">
+                      <h1 className="text-3xl text-[#00954C] font-bold m-4">Dashboard</h1>
+                      <ClipLoader
+                        color="#00954C"
+                        loading={isLoading}
+                        size={100}
+                        />
+                    </div>
+                  ) : (
+                    <Dashboard
+                      hasClientData={hasClientData}
+                      invoices={invoices}
+                      serviceData={serviceData}
+                      userName={userName}
+                    />
+                  )
                 }
               />
               <Route
                 path="/payments"
-                element={<Payments invoices={invoices} userName={userName} />}
+                element={
+                  isLoading ? (
+                    <div className="flex max-w-[1080px] mx-auto items-center flex-col">
+                      <h1 className="text-3xl text-[#00954C] font-bold m-4">Payments</h1>
+                      <ClipLoader
+                        color="#00954C"
+                        loading={isLoading}
+                        size={100}
+                        />
+                    </div>
+                  ) : (
+                    <Payments invoices={invoices} userName={userName} />
+                  )
+                }
               />
               <Route
                 path="/services"
                 element={
-                  <Services
-                    serviceData={serviceData}
-                    pricePerMowTrim={pricePerMowTrim}
-                    userName={userName}
-                    hasClientData={hasClientData}
-                  />
+                  isLoading ? (
+                    <div className="flex max-w-[1080px] mx-auto items-center flex-col">
+                      <h1 className="text-3xl text-[#00954C] font-bold m-4">Services</h1>
+                      <ClipLoader
+                        color="#00954C"
+                        loading={isLoading}
+                        size={100}
+                        />
+                    </div>
+                  ) : (
+                    <Services
+                      serviceData={serviceData}
+                      pricePerMowTrim={pricePerMowTrim}
+                      userName={userName}
+                      hasClientData={hasClientData}
+                    />
+                  )
                 }
               />
               <Route path="/signup" element={<Signup />} />
