@@ -70,7 +70,7 @@ function App() {
         <div className="h-screen bg-white">
           <Nav userName={userName} />
           <Sidebar />
-          <div className="h-full w-5/6 ml-auto p-8">
+          <div className="h-full w-full md:w-5/6 ml-auto p-4 sm:p-8">
             <Routes>
               <Route
                 path="/"
@@ -82,7 +82,7 @@ function App() {
                         color="#00954C"
                         loading={isLoading}
                         size={100}
-                        />
+                      />
                     </div>
                   ) : (
                     <Dashboard
@@ -104,7 +104,7 @@ function App() {
                         color="#00954C"
                         loading={isLoading}
                         size={100}
-                        />
+                      />
                     </div>
                   ) : (
                     <Payments invoices={invoices} userName={userName} />
@@ -121,7 +121,7 @@ function App() {
                         color="#00954C"
                         loading={isLoading}
                         size={100}
-                        />
+                      />
                     </div>
                   ) : (
                     <Services

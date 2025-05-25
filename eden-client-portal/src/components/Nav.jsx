@@ -1,21 +1,11 @@
-import React from "react";
 import Logo from "../assets/logowhite.png";
-import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
-import { signOut, onAuthStateChanged } from "firebase/auth";
+import { signOut } from "firebase/auth";
 import { FaUserCircle } from "react-icons/fa";
 
 function Nav({ userName }) {
-  const [currentUser, setCurrentUser] = useState(null);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
-    });
-    return () => unsubscribe(); // Cleanup subscription on unmount
-  }, []);
 
   const handleSignOut = () => {
     signOut(auth)
@@ -32,17 +22,17 @@ function Nav({ userName }) {
     <nav className="bg-stone-900 border-b text-white shadow-lg border-[#00954C] px-4 py-2 flex justify-between items-center">
       <div className="flex items-center">
         <img src={Logo} alt="Logo" className="h-16 mr-3" />
-        <span className="text-xl font-bold">Client Portal</span>
+        <span className="hidden sm:block text-xl font-bold">Client Portal</span>
       </div>
-      <div>
+      <div className="text-sm md:text-base">
         {userName ? (
           <>
-            <div className="flex items-center">
+            <div className="flex flex-col md:flex-row items-center">
             <FaUserCircle className="text-2xl mx-2" />
-            <span> {userName} </span>{" "}
+            <span className="hidden md:block"> {userName} </span>{" "}
             <span
               onClick={handleSignOut}
-              className="text-[#7BD650] cursor-pointer hover:underline ml-4"
+              className="text-[#7BD650] cursor-pointer hover:underline md:ml-4"
             >
               Sign out{" "}
             </span>

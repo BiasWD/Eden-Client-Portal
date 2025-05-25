@@ -27,10 +27,10 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
 
   return (
     <div className="flex max-w-[1080px] mx-auto items-center flex-col">
-      <h1 className="text-3xl text-[#00954C] font-bold m-4">Dashboard</h1>
+      <h1 className="text-3xl text-[#00954C] font-bold mt-2 md:mt-4 m-4">Dashboard</h1>
       {userName ? (
         <>
-          <p>Hi {userName}, Welcome to your dashboard!</p>
+          <p>Hi <strong>{userName}</strong>, Welcome to your dashboard!</p>
           {!hasClientData ? (
             <p>
               <strong>Note:</strong> It looks like we don't have any client data
@@ -53,15 +53,15 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
       ) : (
         <p>Log in or sign up to view your dashboard.</p>
       )}
-      <div className="shadow-xl flex w-full border-[#7BD650] border-1 overflow-hidden rounded-lg mt-8">
-        <div className="text-xl text-center text-white bg-[#7BD650] p-4 font-bold">
+      <div className="shadow-xl flex w-full flex-col md:flex-row border-[#7BD650] border-1 overflow-hidden rounded-lg mt-8">
+        <div className="text-xl text-center flex text-white bg-[#7BD650] p-4 font-bold">
           Announcements
         </div>
-        <p className=" p-4 text-xl align-center">No new announcements</p>
+        <p className=" p-4 md:text-lg align-center">No new announcements</p>
       </div>
 
       {userName ? (
-        <div className="w-full mt-8 flex flex-row gap-8">
+        <div className="w-full mt-8 flex flex-col sm:flex-row gap-8">
           <div className="shadow-xl border-[#00954C] border-1 rounded-lg overflow-hidden flex flex-col flex-1 justify-between">
             <div className="text-xl text-center text-white p-4 bg-[#00954C] font-bold">
               Amount Due
@@ -81,7 +81,7 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
               Recent Services
             </div>
 
-            <ul className="p-8 list-disc">
+            <ul className="p-8 list-disc mx-auto text-sm md:text-base">
               {sortedRecentServices.map((service, index) => (
                 <li key={index}>
                   <strong>{service.type}</strong> on{" "}
