@@ -65,7 +65,7 @@ function Payments({ invoices, userName }) {
   return (
     <div className="flex max-w-[1080px] mx-auto items-center flex-col">
       <h1 className="text-3xl text-[#00954C] font-bold mt-2 md:mt-4 m-4">Payments</h1>
-      <p className="text-center">Welcome to the Payment Page! Your bills will show up here.</p>
+      <p className="text-center">Your bills will show up here.</p>
       <p className="text-center text-sm">
         <strong>Note:</strong> Please allow time for payment status to update.
         We will change it manually once received.
