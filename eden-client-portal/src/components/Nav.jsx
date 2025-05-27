@@ -27,12 +27,12 @@ function Nav({ userName }) {
       <div className="text-sm md:text-base">
         {userName ? (
           <>
-            <div className="flex flex-col md:flex-row items-center">
-            <FaUserCircle className="text-2xl mx-2" />
+            <div className="flex flex-row items-center">
+            <FaUserCircle className="text-4xl mx-2" />
             <span className="hidden md:block"> {userName} </span>{" "}
             <span
               onClick={handleSignOut}
-              className="text-[#7BD650] cursor-pointer hover:underline md:ml-4"
+              className="text-[#7BD650] font-bold cursor-pointer hover:underline md:ml-4"
             >
               Sign out{" "}
             </span>
@@ -41,7 +41,7 @@ function Nav({ userName }) {
         ) : (
           <Link to="/login">
             {" "}
-            <span className="text-[#7BD650] hover:underline">Log In </span>
+            <span className="text-[#7BD650] font-bold hover:underline">Log In </span>
           </Link>
         )}
       </div>

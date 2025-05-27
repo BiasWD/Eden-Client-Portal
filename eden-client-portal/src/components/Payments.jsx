@@ -1,4 +1,3 @@
-import React from "react";
 import { useEffect, useState } from "react";
 import { FaLock, FaArrowLeft } from "react-icons/fa6";
 import { Link } from "react-router-dom";
@@ -64,7 +63,7 @@ function Payments({ invoices, userName }) {
 
   return (
     <div className="flex max-w-[1080px] mx-auto items-center flex-col">
-      <h1 className="text-3xl text-[#00954C] font-bold mt-2 md:mt-4 m-4">Payments</h1>
+      <h1 className="text-3xl text-[#00954C] font-bold mt-0 md:mt-4 m-4">Payments</h1>
       <p className="text-center">Your bills will show up here.</p>
       <p className="text-center text-sm">
         <strong>Note:</strong> Please allow time for payment status to update.
@@ -79,7 +78,7 @@ function Payments({ invoices, userName }) {
                 Billing History
               </div>
               <div className="text-xl py-4 px-4 sm:px-8 bg-stone-700 text-stone-200">
-                <strong>Total Due: </strong>${totalDue}
+                Total Due: <strong className="text-white">${totalDue}</strong>
               </div>
               <div className="py-4 px-4 sm:px-8 flex flex-row items-center gap-2 bg-stone-200 text-stone-900 text-sm md:text-base">
                 <div className="flex-1">
@@ -98,8 +97,8 @@ function Payments({ invoices, userName }) {
               <>{invoiceDivs}</>
             </div>
             <div className="w-full flex">
-              <Link className="w-fit my-4 mx-auto" to="/">
-                <button className="bg-[#00954C]  text-white flex flex-row rounded-md cursor-pointer items-center gap-2 p-2 px-6 hover:bg-[#7BD650] transition duration-300">
+              <Link className="w-fit sm:my-4 mx-auto" to="/">
+                <button className="bg-[#00954C]  text-white flex flex-row rounded-lg cursor-pointer items-center gap-2 p-2 px-6 hover:bg-[#7BD650] transition duration-300">
                   <span>Dashboard</span>
                   <FaArrowLeft />
                 </button>

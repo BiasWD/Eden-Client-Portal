@@ -19,7 +19,7 @@ function Services({ serviceData, pricePerMowTrim, userName, hasClientData }) {
 
   return (
     <div className="flex max-w-[1080px] mx-auto items-center flex-col">
-      <h1 className="text-3xl text-[#00954C] font-bold mt-2 md:mt-4 m-4">Services</h1>
+      <h1 className="text-3xl text-[#00954C] font-bold mt-0 md:mt-4 m-4">Services</h1>
       <p className="text-center">Services will be listed here when completed.</p>
       <p className="text-center text-sm">
         The current base price for mowing and trimming
@@ -51,8 +51,8 @@ function Services({ serviceData, pricePerMowTrim, userName, hasClientData }) {
               <>{serviceDivs}</>
             </div>
             <div className="w-full flex">
-              <Link className="w-fit my-4 mx-auto" to="/">
-                <button className="bg-[#00954C]  text-white flex flex-row rounded-md cursor-pointer items-center gap-2 p-2 px-6 hover:bg-[#7BD650] transition duration-300">
+              <Link className="w-fit sm:my-4 mx-auto" to="/">
+                <button className="bg-[#00954C]  text-white flex flex-row rounded-lg cursor-pointer items-center gap-2 p-2 px-6 hover:bg-[#7BD650] transition duration-300">
                   <span>Dashboard</span>
                   <FaArrowLeft />
                 </button>

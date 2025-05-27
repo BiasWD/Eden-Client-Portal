@@ -27,7 +27,7 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
 
   return (
     <div className="flex max-w-[1080px] mx-auto items-center flex-col">
-      <h1 className="text-3xl text-[#00954C] font-bold mt-2 md:mt-4 m-4">Dashboard</h1>
+      <h1 className="text-3xl text-[#00954C] font-bold mt-0 md:mt-4 m-4">Dashboard</h1>
       {userName ? (
         <>
           <p>Hi <strong>{userName}</strong>, Welcome to your dashboard!</p>
@@ -61,7 +61,7 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
       </div>
 
       {userName ? (
-        <div className="w-full mt-8 flex flex-col sm:flex-row gap-8">
+        <div className="w-full mt-4 sm:mt-8 flex flex-col sm:flex-row gap-4 sm:gap-8">
           <div className="shadow-xl border-[#00954C] border-1 rounded-lg overflow-hidden flex flex-col flex-1 justify-between">
             <div className="text-xl text-center text-white p-4 bg-[#00954C] font-bold">
               Amount Due
@@ -70,7 +70,7 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
               <strong>${totalDue}</strong>
             </p>
             <Link className="w-fit mb-4 mx-auto" to="/payments">
-              <button className="bg-[#00954C] text-white flex items-center gap-2 cursor-pointer rounded-md p-2 px-6 hover:bg-[#7BD650] transition duration-300">
+              <button className="bg-[#00954C] text-white flex items-center gap-2 cursor-pointer rounded-lg p-2 px-6 hover:bg-[#7BD650] transition duration-300">
                 <FaArrowRight />
                 <span>Payments</span>
               </button>
@@ -90,7 +90,7 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
               ))}
             </ul>
             <Link className="w-fit mb-4 mx-auto" to="/services">
-              <button className="bg-[#00954C] text-white flex items-center gap-2 cursor-pointer rounded-md p-2 px-6 hover:bg-[#7BD650] transition duration-300">
+              <button className="bg-[#00954C] text-white flex items-center gap-2 cursor-pointer rounded-lg p-2 px-6 hover:bg-[#7BD650] transition duration-300">
                 <FaArrowRight />
                 <span>Services</span>
               </button>
@@ -98,23 +98,26 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
           </div>
         </div>
       ) : (
-        <div className="w-full mt-8 flex flex-row gap-8">
+        <div className="w-full mt-4 sm:mt-8 flex flex-col sm:flex-row gap-4 sm:gap-8">
           <div className="shadow-xl flex flex-col flex-1 border-stone-500 font-bold text-xl text-stone-500 rounded-lg overflow-hidden border-1  bg-white">
-            <div className="text-xl text-white py-4 px-8 flex items-center bg-stone-500 font-bold">
+            <div className="text-xl text-white py-4 px-4 sm:px-8 flex items-center bg-stone-500 font-bold">
               <FaLock />
               <span className="pl-2">Amount Due</span>
             </div>
             <div className="py-4 px-8">
               {" "}
-              Please log in to view your dashboard.
+              Please log in to view your amount due.
             </div>
           </div>
           <div className="shadow-xl flex flex-col flex-1 border-stone-500 font-bold text-xl text-stone-500 rounded-lg overflow-hidden border-1  bg-white">
-            <div className="text-xl text-white py-4 px-8 flex items-center bg-stone-500 font-bold">
+            <div className="text-xl text-white py-4 px-4 sm:px-8 flex items-center bg-stone-500 font-bold">
               <FaLock />
               <span className="pl-2">Recent Services</span>
             </div>
-            <div className="py-4 px-8"> </div>
+            <div className="py-4 px-8">
+              {" "}
+              Please log in to view your recent services.
+            </div>
           </div>
         </div>
       )}
