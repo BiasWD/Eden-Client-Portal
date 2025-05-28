@@ -75,14 +75,14 @@ function Payments({ invoices, userName }) {
           <>
             <div className="shadow-xl flex flex-col flex-1 border-[#00954C] border-1 rounded-lg overflow-hidden bg-white">
               <div className="text-xl text-white py-4 px-4 sm:px-8 bg-[#00954C] font-bold">
-                Billing History
+                Billing Records
               </div>
-              <div className="text-xl py-4 px-4 sm:px-8 bg-stone-700 text-stone-200">
-                Total Due: <strong className="text-white">${totalDue}</strong>
+              <div className="text-xl font-bold py-4 px-4 sm:px-8 bg-stone-700 text-stone-200">
+                Total Due: <span className="text-black px-4 py-1 inline-flex mx-1 bg-white rounded-xl">${totalDue}</span>
               </div>
               <div className="py-4 px-4 sm:px-8 flex flex-row items-center gap-2 bg-stone-200 text-stone-900 text-sm md:text-base">
                 <div className="flex-1">
-                  <span className="font-bold">Description</span>
+                  <span className="font-bold">Title</span>
                 </div>
                 <div className="flex-1">
                   <span className="font-bold">Amount</span>
@@ -109,7 +109,7 @@ function Payments({ invoices, userName }) {
           <div className="shadow-xl flex flex-col flex-1 border-stone-500 font-bold text-xl text-stone-500 border-1 rounded-lg overflow-hidden bg-white">
             <div className="text-xl text-white py-4 px-4 sm:px-8 flex items-center bg-stone-500 font-bold">
               <FaLock />
-              <span className="pl-2">Billing History</span>
+              <span className="pl-2">Billing Records</span>
             </div>
             <div className="py-4 px-4 sm:px-8">
               {" "}

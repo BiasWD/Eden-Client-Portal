@@ -38,7 +38,7 @@ function Services({ serviceData, pricePerMowTrim, userName, hasClientData }) {
           <>
             <div className="shadow-xl flex flex-col flex-1 border-[#00954C] border-1 rounded-lg overflow-hidden">
               <div className="text-xl text-white py-4 px-4 sm:px-8 bg-[#00954C] font-bold">
-                Service History
+                History
               </div>
               <div className="py-4 px-4 sm:px-8 flex flex-row items-center gap-2 bg-stone-200 text-stone-900 text-md md:text-lg">
                 <div className="flex-1">
