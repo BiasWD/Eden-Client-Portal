@@ -109,7 +109,7 @@ function Login() {
 
   return (
     <>
-      <div className="flex max-w-[1080px] mx-auto items-center flex-col">
+      <div className="flex max-w-[1080px] pb-8 mx-auto items-center flex-col">
         <p>Please sign in to continue</p>
         <div className="flex flex-row rounded-t-lg w-72 my-4">
           <div className="flex-1 cursor-default">

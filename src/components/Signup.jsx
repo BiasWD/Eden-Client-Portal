@@ -145,7 +145,7 @@ function Signup() {
   };
 
   return (
-    <div className="flex max-w-[1080px] mx-auto items-center flex-col">
+    <div className="flex max-w-[1080px] pb-8 mx-auto items-center flex-col">
       <p>Please create an account to continue</p>
       <div className="flex flex-row rounded-t-lg w-72 my-4">
         <Link to="/login" className="flex-1">
@@ -272,14 +272,6 @@ function Signup() {
             <FcGoogle />
           </button>
         )}
-      </div>
-      <div className="text-sm">
-        <span className="text-black">Already have an account?</span>
-        <Link to="/login">
-          <span className="text-[#00954C] font-bold hover:underline ml-2">
-            Log In
-          </span>
-        </Link>
       </div>
     </div>
   );

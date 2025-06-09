@@ -26,7 +26,7 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
     .slice(0, 3);
 
   return (
-    <div className="flex max-w-[1080px] mx-auto items-center flex-col">
+    <div className="flex max-w-[1080px] pb-8 mx-auto items-center flex-col">
       <h1 className="text-3xl text-[#00954C] font-bold mt-0 md:mt-4 mx-4">
         Dashboard
       </h1>
