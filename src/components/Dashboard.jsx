@@ -31,7 +31,7 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
       </h1>
       {userName ? (
         <>
-          <p className="sm:mt-2 font-bold">
+          <p className="sm:mt-2 text-center font-bold">
             Hi <span className="text-[#00954C]">{userName}</span>, Welcome to
             your dashboard!
           </p>
@@ -60,16 +60,18 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
         </p>
       )}
       <div className="shadow-xl flex w-full flex-col md:flex-row border-[#7BD650] border-1 overflow-hidden rounded-lg mt-8">
-        <div className="text-xl text-center flex text-white bg-[#7BD650] p-4 font-bold">
+        <div className="text-xl text-center flex text-white bg-[#7BD650] justify-center p-2 md:p-4 font-bold">
           Announcements
         </div>
-        <p className=" p-4 md:text-lg align-center">No new announcements</p>
+        <p className=" p-4 md:text-lg text-center align-center">
+          No new announcements
+        </p>
       </div>
 
       {userName ? (
         <div className="w-full mt-4 sm:mt-8 flex flex-col sm:flex-row gap-4 sm:gap-8">
           <div className="shadow-xl border-[#00954C] border-1 rounded-lg overflow-hidden flex flex-col flex-1 justify-between">
-            <div className="text-xl text-center text-white p-4 bg-[#00954C] font-bold">
+            <div className="text-xl text-center text-white p-2 md:p-4 bg-[#00954C] font-bold">
               Amount Due
             </div>
             <p className=" p-8 text-xl text-center">
@@ -83,7 +85,7 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
             </Link>
           </div>
           <div className="shadow-xl border-[#00954C] border-1 rounded-lg overflow-hidden flex flex-col justify-between flex-1">
-            <div className="text-xl text-center text-white p-4 bg-[#00954C] font-bold">
+            <div className="text-xl text-center text-white p-2 md:p-4 bg-[#00954C] font-bold">
               Recent Services
             </div>
 
@@ -106,7 +108,7 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
       ) : (
         <div className="w-full mt-4 sm:mt-8 flex flex-col sm:flex-row gap-4 sm:gap-8">
           <div className="shadow-xl flex flex-col flex-1 border-stone-500 text-xl text-stone-500 rounded-lg overflow-hidden border-1  bg-white">
-            <div className="text-xl text-white py-4 px-4 sm:px-8 flex items-center bg-stone-500 font-bold">
+            <div className="text-xl text-white p-2 md:p-4 justify-center flex items-center bg-stone-500 font-bold">
               <FaLock />
               <span className="pl-2 font-bold">Amount Due</span>
             </div>
@@ -116,7 +118,7 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
             </div>
           </div>
           <div className="shadow-xl flex flex-col flex-1 border-stone-500 text-xl text-stone-500 rounded-lg overflow-hidden border-1  bg-white">
-            <div className="text-xl text-white py-4 px-4 sm:px-8 flex items-center bg-stone-500 font-bold">
+            <div className="text-xl text-white sm:px-8 p-2 md:p-4 justify-center flex items-center bg-stone-500 font-bold">
               <FaLock />
               <span className="pl-2 font-bold">Recent Services</span>
             </div>

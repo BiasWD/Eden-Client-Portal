@@ -74,14 +74,14 @@ function Payments({ invoices, userName }) {
         We will change it manually once received.
       </p>
 
-      <div className="w-full mt-8 flex flex-col gap-8">
+      <div className="w-full mt-8 flex flex-col text-center md:text-left gap-8">
         {userName ? (
           <>
             <div className="shadow-xl flex flex-col flex-1 border-[#00954C] border-1 rounded-lg overflow-hidden bg-white">
-              <div className="text-xl text-white py-4 px-4 sm:px-8 bg-[#00954C] font-bold">
+              <div className="text-xl text-white py-2 md:py-4 px-4 sm:px-8 bg-[#00954C] font-bold">
                 Billing Records
               </div>
-              <div className="text-xl font-bold py-4 px-4 sm:px-8 bg-stone-700 text-stone-200">
+              <div className="text-xl font-bold py-2 md:py-4 px-4 sm:px-8 bg-stone-700 text-stone-200">
                 Total Due:{" "}
                 <span className="text-black px-4 py-1 inline-flex mx-1 bg-white rounded-xl">
                   ${totalDue}
@@ -114,7 +114,7 @@ function Payments({ invoices, userName }) {
           </>
         ) : (
           <div className="shadow-xl flex flex-col flex-1 border-stone-500 text-xl text-stone-500 border-1 rounded-lg overflow-hidden bg-white">
-            <div className="text-xl text-white py-4 px-4 sm:px-8 flex items-center bg-stone-500 font-bold">
+            <div className="text-xl text-white p-2 md:p-4 justify-center sm:px-8 flex items-center bg-stone-500 font-bold">
               <FaLock />
               <span className="pl-2 font-bold">Billing Records</span>
             </div>
