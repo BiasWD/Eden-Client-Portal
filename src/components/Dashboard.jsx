@@ -1,4 +1,3 @@
-import React from "react";
 import { useEffect, useState } from "react";
 import { FaLock, FaArrowRight } from "react-icons/fa6";
 import { Link } from "react-router-dom";
@@ -27,12 +26,12 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
 
   return (
     <div className="flex max-w-[1080px] pb-8 mx-auto items-center flex-col">
-      <h1 className="text-3xl text-[#00954C] font-bold mt-0 md:mt-4 mx-4">
+      <h1 className="text-3xl text-[#00954C] hidden sm:block font-bold mt-0 md:mt-4 mx-4">
         Dashboard
       </h1>
       {userName ? (
         <>
-          <p className="mt-2 font-bold">
+          <p className="sm:mt-2 font-bold">
             Hi <span className="text-[#00954C]">{userName}</span>, Welcome to
             your dashboard!
           </p>
@@ -56,7 +55,7 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
           )}
         </>
       ) : (
-        <p className="mt-2 font-bold">
+        <p className="sm:mt-2 font-bold">
           Log in or sign up to view your dashboard.
         </p>
       )}
@@ -106,24 +105,24 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
         </div>
       ) : (
         <div className="w-full mt-4 sm:mt-8 flex flex-col sm:flex-row gap-4 sm:gap-8">
-          <div className="shadow-xl flex flex-col flex-1 border-stone-500 font-bold text-xl text-stone-500 rounded-lg overflow-hidden border-1  bg-white">
+          <div className="shadow-xl flex flex-col flex-1 border-stone-500 text-xl text-stone-500 rounded-lg overflow-hidden border-1  bg-white">
             <div className="text-xl text-white py-4 px-4 sm:px-8 flex items-center bg-stone-500 font-bold">
               <FaLock />
-              <span className="pl-2">Amount Due</span>
+              <span className="pl-2 font-bold">Amount Due</span>
             </div>
-            <div className="py-4 px-8">
+            <div className="py-4 px-4 sm:px-8 text-base">
               {" "}
-              Please log in to view your amount due.
+              Please <strong>Sign In</strong> to view your amount due.
             </div>
           </div>
-          <div className="shadow-xl flex flex-col flex-1 border-stone-500 font-bold text-xl text-stone-500 rounded-lg overflow-hidden border-1  bg-white">
+          <div className="shadow-xl flex flex-col flex-1 border-stone-500 text-xl text-stone-500 rounded-lg overflow-hidden border-1  bg-white">
             <div className="text-xl text-white py-4 px-4 sm:px-8 flex items-center bg-stone-500 font-bold">
               <FaLock />
-              <span className="pl-2">Recent Services</span>
+              <span className="pl-2 font-bold">Recent Services</span>
             </div>
-            <div className="py-4 px-8">
+            <div className="py-4 px-4 sm:px-8 text-base">
               {" "}
-              Please log in to view your recent services.
+              Please <strong>Sign In</strong> to view your recent services.
             </div>
           </div>
         </div>

@@ -1,4 +1,3 @@
-import React from "react";
 import { FaLock, FaArrowLeft } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
@@ -19,10 +18,10 @@ function Services({ serviceData, pricePerMowTrim, userName, hasClientData }) {
 
   return (
     <div className="flex max-w-[1080px] pb-8 mx-auto items-center flex-col">
-      <h1 className="text-3xl text-[#00954C] font-bold mt-0 md:mt-4 mx-4">
+      <h1 className="text-3xl text-[#00954C] hidden sm:block font-bold mt-0 md:mt-4 mx-4">
         Services
       </h1>
-      <p className="text-center font-bold mt-2">
+      <p className="text-center font-bold sm:mt-2">
         Services will be listed here when completed.
       </p>
       <p className="text-center mt-2 text-sm">
@@ -63,14 +62,14 @@ function Services({ serviceData, pricePerMowTrim, userName, hasClientData }) {
             </div>
           </>
         ) : (
-          <div className="shadow-xl flex flex-col flex-1 border-stone-500 font-bold text-xl text-stone-500 border-1 rounded-lg overflow-hidden bg-white">
+          <div className="shadow-xl flex flex-col flex-1 border-stone-500 text-xl text-stone-500 border-1 rounded-lg overflow-hidden bg-white">
             <div className="text-xl text-white py-4 px-4 sm:px-8 flex items-center bg-stone-500 font-bold">
               <FaLock />
-              <span className="pl-2">Service History</span>
+              <span className="pl-2 font-bold">Service History</span>
             </div>
-            <div className="py-4 px-4 sm:px-8">
+            <div className="py-4 px-4 sm:px-8 text-base">
               {" "}
-              Please log in to view your service history.
+              Please <strong>Sign In</strong> to view your service history.
             </div>
           </div>
         )}

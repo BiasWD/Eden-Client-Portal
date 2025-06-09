@@ -63,10 +63,10 @@ function Payments({ invoices, userName }) {
 
   return (
     <div className="flex max-w-[1080px] pb-8 mx-auto items-center flex-col">
-      <h1 className="text-3xl text-[#00954C] font-bold mt-0 md:mt-4 mx-4">
+      <h1 className="text-3xl text-[#00954C] hidden sm:block font-bold mt-0 md:mt-4 mx-4">
         Payments
       </h1>
-      <p className="text-center font-bold mt-2">
+      <p className="text-center font-bold sm:mt-2">
         Your bills will show up here.
       </p>
       <p className="text-center text-sm mt-2">
@@ -113,14 +113,14 @@ function Payments({ invoices, userName }) {
             </div>
           </>
         ) : (
-          <div className="shadow-xl flex flex-col flex-1 border-stone-500 font-bold text-xl text-stone-500 border-1 rounded-lg overflow-hidden bg-white">
+          <div className="shadow-xl flex flex-col flex-1 border-stone-500 text-xl text-stone-500 border-1 rounded-lg overflow-hidden bg-white">
             <div className="text-xl text-white py-4 px-4 sm:px-8 flex items-center bg-stone-500 font-bold">
               <FaLock />
-              <span className="pl-2">Billing Records</span>
+              <span className="pl-2 font-bold">Billing Records</span>
             </div>
-            <div className="py-4 px-4 sm:px-8">
+            <div className="py-4 px-4 sm:px-8 text-base">
               {" "}
-              Please log in to view your payment history.
+              Please <strong>Sign In</strong> to view your payment history.
             </div>
           </div>
         )}

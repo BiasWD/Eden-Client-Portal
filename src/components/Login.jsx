@@ -110,22 +110,21 @@ function Login() {
   return (
     <>
       <div className="flex max-w-[1080px] pb-8 mx-auto items-center flex-col">
-        <p>Please sign in to continue</p>
-        <div className="flex flex-row rounded-t-lg w-72 my-4">
+        <p className="font-bold">Please sign in to continue.</p>
+        <div className="flex flex-row rounded-t-lg w-72 mt-4">
           <div className="flex-1 cursor-default">
-            <h1 className="text-2xl text-center px-4 py-2 flex-1 text-white bg-[#00954C] font-bold rounded-tl-lg ">
+            <h1 className="text-xl text-center px-4 py-2 flex-1 text-white bg-[#00954C] font-bold rounded-tl-lg ">
               Log In
             </h1>
           </div>
           <Link to="/signup" className="flex-1">
-            <h1 className="text-2xl text-center px-4 py-2 text-[#00954C] rounded-tr-lg font-bold transition-all duration-300 bg-stone-200 hover:bg-[#7BD650] hover:text-white">
+            <h1 className="text-xl text-center px-4 py-2 text-[#00954C] rounded-tr-lg font-bold transition-all duration-300 bg-stone-200 hover:bg-[#7BD650] hover:text-white">
               Sign Up
             </h1>
           </Link>
         </div>
-
         <div
-          className={`mt-4 flex flex-col transition-opacity duration-300 ${
+          className={`flex flex-col transition-opacity duration-300 border shadow-xl border-stone-200 rounded-xl py-10 min-w-80 px-4 ${
             isLoading || googleIsLoading
               ? "opacity-50 pointer-events-none"
               : "opacity-100"
@@ -191,7 +190,7 @@ function Login() {
                 setEmail("");
                 setPassword("");
               }}
-              className=" border-1 text-sm justify-center rounded-md mt-2 p-2 mb-4 hover:bg-stone-200 transition duration-300 flex items-center gap-2 cursor-pointer"
+              className=" border-1 text-sm justify-center rounded-md mt-2 p-2 hover:bg-stone-200 transition duration-300 flex items-center gap-2 cursor-pointer"
             >
               <span>Sign In with Google</span>
               <FcGoogle />
