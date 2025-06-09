@@ -146,8 +146,19 @@ function Signup() {
 
   return (
     <div className="flex max-w-[1080px] mx-auto items-center flex-col">
-      <h1 className="text-3xl text-[#00954C] font-bold m-4">Sign Up</h1>
-      <p>Please Sign up to continue</p>
+      <p>Please create an account to continue</p>
+      <div className="flex flex-row rounded-t-lg w-72 my-4">
+        <Link to="/login" className="flex-1">
+          <h1 className="text-2xl text-center px-4 py-2 text-[#00954C] rounded-tl-lg font-bold transition-all duration-300 bg-stone-200 hover:bg-[#7BD650] hover:text-white">
+            Log In
+          </h1>
+        </Link>
+        <div className="flex-1 cursor-default">
+          <h1 className="text-2xl text-center px-4 py-2 flex-1 text-white bg-[#00954C] font-bold rounded-tr-lg">
+            Sign Up
+          </h1>
+        </div>
+      </div>
 
       <div
         className={`mt-8 flex flex-col transition-opacity duration-300 ${
@@ -159,7 +170,7 @@ function Signup() {
         <div className="flex flex-row gap-4">
           <div className="relative mb-6">
             <input
-            value={firstName}
+              value={firstName}
               disabled={isLoading || googleIsLoading}
               onChange={(e) => setFirstName(e.target.value)}
               className="w-full border border-[#00954C] rounded-md p-2"
@@ -203,35 +214,35 @@ function Signup() {
             </span>
           )}
         </div>
-          <div className="relative mb-6">
-        <input
-          value={password}
-          disabled={isLoading || googleIsLoading}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full border border-[#00954C] rounded-md p-2"
-          type="password"
-          placeholder="Password"
-        />
-        {errors.password && (
-          <span className="absolute left-0 top-full text-red-500 text-sm">
-            {errors.password}
-          </span>
-        )}
+        <div className="relative mb-6">
+          <input
+            value={password}
+            disabled={isLoading || googleIsLoading}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full border border-[#00954C] rounded-md p-2"
+            type="password"
+            placeholder="Password"
+          />
+          {errors.password && (
+            <span className="absolute left-0 top-full text-red-500 text-sm">
+              {errors.password}
+            </span>
+          )}
         </div>
         <div className="relative mb-6">
-        <input
-          value={confirmPassword}
-          disabled={isLoading || googleIsLoading}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          className="w-full border border-[#00954C] rounded-md p-2"
-          type="password"
-          placeholder="Confirm Password"
-        />
-        {errors.confirmPassword && (
-          <span className="absolute left-0 top-full text-red-500 text-sm">
-            {errors.confirmPassword}
-          </span>
-        )}
+          <input
+            value={confirmPassword}
+            disabled={isLoading || googleIsLoading}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className="w-full border border-[#00954C] rounded-md p-2"
+            type="password"
+            placeholder="Confirm Password"
+          />
+          {errors.confirmPassword && (
+            <span className="absolute left-0 top-full text-red-500 text-sm">
+              {errors.confirmPassword}
+            </span>
+          )}
         </div>
         {isLoading ? (
           <div className="bg-[#00954C] text-white rounded-md p-2 mb-2 transition duration-300">
@@ -265,7 +276,9 @@ function Signup() {
       <div className="text-sm">
         <span className="text-black">Already have an account?</span>
         <Link to="/login">
-          <span className="text-[#00954C] hover:underline ml-2">Log In</span>
+          <span className="text-[#00954C] font-bold hover:underline ml-2">
+            Log In
+          </span>
         </Link>
       </div>
     </div>

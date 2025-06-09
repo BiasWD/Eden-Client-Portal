@@ -32,7 +32,7 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
         <>
           <p>Hi <strong>{userName}</strong>, Welcome to your dashboard!</p>
           {!hasClientData ? (
-            <p>
+            <p className="text-sm text-center">
               <strong>Note:</strong> It looks like we don't have any client data
               for you yet. Please allow time for us to add you to the database
               or{" "}

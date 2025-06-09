@@ -110,11 +110,22 @@ function Login() {
   return (
     <>
       <div className="flex max-w-[1080px] mx-auto items-center flex-col">
-        <h1 className="text-3xl text-[#00954C] font-bold m-4">Login</h1>
         <p>Please sign in to continue</p>
+        <div className="flex flex-row rounded-t-lg w-72 my-4">
+          <div className="flex-1 cursor-default">
+            <h1 className="text-2xl text-center px-4 py-2 flex-1 text-white bg-[#00954C] font-bold rounded-tl-lg ">
+              Log In
+            </h1>
+          </div>
+          <Link to="/signup" className="flex-1">
+            <h1 className="text-2xl text-center px-4 py-2 text-[#00954C] rounded-tr-lg font-bold transition-all duration-300 bg-stone-200 hover:bg-[#7BD650] hover:text-white">
+              Sign Up
+            </h1>
+          </Link>
+        </div>
 
         <div
-          className={`mt-8 flex flex-col transition-opacity duration-300 ${
+          className={`mt-4 flex flex-col transition-opacity duration-300 ${
             isLoading || googleIsLoading
               ? "opacity-50 pointer-events-none"
               : "opacity-100"
@@ -164,7 +175,7 @@ function Login() {
                 loginError ? "mt-5" : ""
               }`}
             >
-              Sign In
+              Log In
             </button>
           )}
           {googleIsLoading ? (
@@ -186,12 +197,6 @@ function Login() {
               <FcGoogle />
             </button>
           )}
-        </div>
-        <div className="text-sm">
-          <span className="text-black">Dont have an account?</span>
-          <Link to="/signup">
-            <span className="text-[#00954C] hover:underline ml-2">Sign Up</span>
-          </Link>
         </div>
       </div>
     </>

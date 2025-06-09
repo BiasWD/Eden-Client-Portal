@@ -4,7 +4,7 @@ import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
 import { FaUserCircle } from "react-icons/fa";
 
-function Nav({ userName }) {
+function Nav({ userName, photoURL }) {
   const navigate = useNavigate();
 
   const handleSignOut = () => {
@@ -28,20 +28,32 @@ function Nav({ userName }) {
         {userName ? (
           <>
             <div className="flex flex-row items-center">
-            <FaUserCircle className="text-4xl mx-2" />
-            <span className="hidden md:block"> {userName} </span>{" "}
-            <span
-              onClick={handleSignOut}
-              className="text-[#7BD650] font-bold cursor-pointer hover:underline md:ml-4"
-            >
-              Sign out{" "}
-            </span>
+              {photoURL ? (
+                <img
+                  src={photoURL}
+                  alt="User Avatar"
+                  loading="lazy"
+                  referrerPolicy="no-referrer"
+                  className="w-10 h-10 rounded-full mx-2"
+                />
+              ) : (
+                <FaUserCircle className="text-4xl mx-2" />
+              )}
+              <span className="hidden md:block"> {userName} </span>{" "}
+              <span
+                onClick={handleSignOut}
+                className="text-[#7BD650] font-bold cursor-pointer hover:underline md:ml-4"
+              >
+                Sign out{" "}
+              </span>
             </div>
           </>
         ) : (
           <Link to="/login">
             {" "}
-            <span className="text-[#7BD650] font-bold hover:underline">Log In </span>
+            <span className="text-[#7BD650] font-bold hover:underline">
+              Sign In{" "}
+            </span>
           </Link>
         )}
       </div>

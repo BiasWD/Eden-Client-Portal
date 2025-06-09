@@ -10,12 +10,11 @@ import Signup from "./components/Signup";
 import { auth, db } from "./firebase";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
-import {
-  ClipLoader,
-} from "react-spinners";
+import { ClipLoader } from "react-spinners";
 
 function App() {
   const [userName, setUserName] = useState("");
+  const [photoURL, setPhotoURL] = useState("");
   const [serviceData, setServiceData] = useState([]);
   const [invoices, setInvoices] = useState([]);
   const [pricePerMowTrim, setPricePerMowTrim] = useState(0);
@@ -27,7 +26,12 @@ function App() {
       setIsLoading(true);
 
       if (user) {
+        console.log("User logged in:", user);
+        console.log("Display name:", user.displayName);
+        console.log("Photo URL:", user.photoURL);
+
         setUserName(user.displayName || user.email || "");
+        setPhotoURL(user.photoURL || "");
 
         const uid = user.uid;
 
@@ -68,7 +72,7 @@ function App() {
     <>
       <Router>
         <div className="h-screen bg-white">
-          <Nav userName={userName} />
+          <Nav userName={userName} photoURL={photoURL} />
           <Sidebar />
           <div className="h-full w-full md:w-5/6 ml-auto p-4 sm:p-8">
             <Routes>
@@ -77,7 +81,9 @@ function App() {
                 element={
                   isLoading ? (
                     <div className="flex max-w-[1080px] mx-auto items-center flex-col">
-                      <h1 className="text-3xl text-[#00954C] font-bold m-4">Dashboard</h1>
+                      <h1 className="text-3xl text-[#00954C] font-bold m-4">
+                        Dashboard
+                      </h1>
                       <ClipLoader
                         color="#00954C"
                         loading={isLoading}
@@ -99,7 +105,9 @@ function App() {
                 element={
                   isLoading ? (
                     <div className="flex max-w-[1080px] mx-auto items-center flex-col">
-                      <h1 className="text-3xl text-[#00954C] font-bold m-4">Payments</h1>
+                      <h1 className="text-3xl text-[#00954C] font-bold m-4">
+                        Payments
+                      </h1>
                       <ClipLoader
                         color="#00954C"
                         loading={isLoading}
@@ -116,7 +124,9 @@ function App() {
                 element={
                   isLoading ? (
                     <div className="flex max-w-[1080px] mx-auto items-center flex-col">
-                      <h1 className="text-3xl text-[#00954C] font-bold m-4">Services</h1>
+                      <h1 className="text-3xl text-[#00954C] font-bold m-4">
+                        Services
+                      </h1>
                       <ClipLoader
                         color="#00954C"
                         loading={isLoading}
