@@ -9,7 +9,7 @@ function Services({ serviceData, pricePerMowTrim, userName, hasClientData }) {
   const serviceDivs = sortedServices.map((service, index) => (
     <div
       key={index}
-      className="py-4 px-4 sm:px-8 flex flex-row items-center border-t border-[#7BD650] gap-2 text-sm md:text-base"
+      className="py-4 px-4 sm:px-8 flex flex-row items-center border-t border-stone-200 gap-2 text-sm md:text-base"
     >
       <div className="flex-1 font-bold text-stone-700">{service.type}</div>
       <div className="flex-1">{service.date.toDate().toLocaleDateString()}</div>

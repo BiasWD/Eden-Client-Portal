@@ -28,35 +28,46 @@ function Payments({ invoices, userName }) {
   const invoiceDivs = sortedInvoices.map((invoice, index) => (
     <div
       key={index}
-      className="py-4 px-4 sm:px-8 flex flex-row items-center border-t border-[#7BD650] gap-2 text-sm md:text-base"
+      className="pt-4 pb-4 md:pb-6 px-4 sm:px-8 flex flex-col items-center md:items-baseline border-t border-stone-200 gap-2 text-sm md:text-base"
     >
-      <div className="flex-1">
+      <div className="flex-1 text-left">
         <span className="font-bold text-stone-700">{invoice.description}</span>
       </div>
-      <div className="flex-1">${invoice.amount}</div>
-      <div className="flex-1">
-        <span
-          className={
-            invoice.dueDate.toDate() < today
-              ? invoice.isPaid === true
-                ? "text-[#00954C]"
-                : "text-red-500 font-bold"
-              : invoice.isPaid === true
-              ? "text-[#00954C]"
-              : "text-yellow-500"
-          }
-        >
-          {invoice.dueDate.toDate() < today
-            ? invoice.isPaid === true
-              ? "Paid"
-              : "OVERDUE"
-            : invoice.isPaid === true
-            ? "Paid"
-            : "Unpaid"}
-        </span>
-      </div>
-      <div className="flex-1">
-        {invoice.dueDate.toDate().toLocaleDateString()}
+      <div className="py-4 px-4 sm:px-8 flex flex-row w-full border border-stone-900 rounded-lg items-center gap-2 bg-stone-200 text-stone-900 text-sm md:text-base">
+        <div className="flex-1 flex flex-col">
+          <span className="font-bold">Amount</span>
+          <div className="flex-1">${invoice.amount}</div>
+        </div>
+        <div className="flex-1 flex flex-col">
+          <span className="font-bold">Status</span>
+          <div className="flex-1">
+            <span
+              className={
+                invoice.dueDate.toDate() < today
+                  ? invoice.isPaid === true
+                    ? "text-[#00954C]"
+                    : "text-red-500 font-bold"
+                  : invoice.isPaid === true
+                  ? "text-[#00954C]"
+                  : "text-yellow-500"
+              }
+            >
+              {invoice.dueDate.toDate() < today
+                ? invoice.isPaid === true
+                  ? "Paid"
+                  : "OVERDUE"
+                : invoice.isPaid === true
+                ? "Paid"
+                : "Unpaid"}
+            </span>
+          </div>
+        </div>
+        <div className="flex-1 flex flex-col">
+          <span className="font-bold">Due Date</span>
+          <div className="flex-1">
+            {invoice.dueDate.toDate().toLocaleDateString()}
+          </div>
+        </div>
       </div>
     </div>
   ));
@@ -86,20 +97,6 @@ function Payments({ invoices, userName }) {
                 <span className="text-black px-4 py-1 inline-flex mx-1 bg-white rounded-xl">
                   ${totalDue}
                 </span>
-              </div>
-              <div className="py-4 px-4 sm:px-8 flex flex-row items-center gap-2 bg-stone-200 text-stone-900 text-sm md:text-base">
-                <div className="flex-1">
-                  <span className="font-bold">Title</span>
-                </div>
-                <div className="flex-1">
-                  <span className="font-bold">Amount</span>
-                </div>
-                <div className="flex-1">
-                  <span className="font-bold">Status</span>
-                </div>
-                <div className="flex-1">
-                  <span className="font-bold">Due Date</span>
-                </div>
               </div>
               <>{invoiceDivs}</>
             </div>
