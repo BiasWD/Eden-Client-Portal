@@ -27,12 +27,17 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
 
   return (
     <div className="flex max-w-[1080px] mx-auto items-center flex-col">
-      <h1 className="text-3xl text-[#00954C] font-bold mt-0 md:mt-4 m-4">Dashboard</h1>
+      <h1 className="text-3xl text-[#00954C] font-bold mt-0 md:mt-4 mx-4">
+        Dashboard
+      </h1>
       {userName ? (
         <>
-          <p>Hi <strong>{userName}</strong>, Welcome to your dashboard!</p>
+          <p className="mt-2 font-bold">
+            Hi <span className="text-[#00954C]">{userName}</span>, Welcome to
+            your dashboard!
+          </p>
           {!hasClientData ? (
-            <p className="text-sm text-center">
+            <p className="text-sm text-center mt-2">
               <strong>Note:</strong> It looks like we don't have any client data
               for you yet. Please allow time for us to add you to the database
               or{" "}
@@ -51,7 +56,9 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
           )}
         </>
       ) : (
-        <p>Log in or sign up to view your dashboard.</p>
+        <p className="mt-2 font-bold">
+          Log in or sign up to view your dashboard.
+        </p>
       )}
       <div className="shadow-xl flex w-full flex-col md:flex-row border-[#7BD650] border-1 overflow-hidden rounded-lg mt-8">
         <div className="text-xl text-center flex text-white bg-[#7BD650] p-4 font-bold">

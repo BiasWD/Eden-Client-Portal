@@ -19,11 +19,14 @@ function Services({ serviceData, pricePerMowTrim, userName, hasClientData }) {
 
   return (
     <div className="flex max-w-[1080px] mx-auto items-center flex-col">
-      <h1 className="text-3xl text-[#00954C] font-bold mt-0 md:mt-4 m-4">Services</h1>
-      <p className="text-center">Services will be listed here when completed.</p>
-      <p className="text-center text-sm">
-        The current base price for mowing and trimming
-        your lawn{" "}
+      <h1 className="text-3xl text-[#00954C] font-bold mt-0 md:mt-4 mx-4">
+        Services
+      </h1>
+      <p className="text-center font-bold mt-2">
+        Services will be listed here when completed.
+      </p>
+      <p className="text-center mt-2 text-sm">
+        The current base price for mowing and trimming your lawn{" "}
         {hasClientData ? (
           <span>
             is <strong>${pricePerMowTrim}</strong> per service

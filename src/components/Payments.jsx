@@ -63,9 +63,13 @@ function Payments({ invoices, userName }) {
 
   return (
     <div className="flex max-w-[1080px] mx-auto items-center flex-col">
-      <h1 className="text-3xl text-[#00954C] font-bold mt-0 md:mt-4 m-4">Payments</h1>
-      <p className="text-center">Your bills will show up here.</p>
-      <p className="text-center text-sm">
+      <h1 className="text-3xl text-[#00954C] font-bold mt-0 md:mt-4 mx-4">
+        Payments
+      </h1>
+      <p className="text-center font-bold mt-2">
+        Your bills will show up here.
+      </p>
+      <p className="text-center text-sm mt-2">
         <strong>Note:</strong> Please allow time for payment status to update.
         We will change it manually once received.
       </p>
@@ -78,7 +82,10 @@ function Payments({ invoices, userName }) {
                 Billing Records
               </div>
               <div className="text-xl font-bold py-4 px-4 sm:px-8 bg-stone-700 text-stone-200">
-                Total Due: <span className="text-black px-4 py-1 inline-flex mx-1 bg-white rounded-xl">${totalDue}</span>
+                Total Due:{" "}
+                <span className="text-black px-4 py-1 inline-flex mx-1 bg-white rounded-xl">
+                  ${totalDue}
+                </span>
               </div>
               <div className="py-4 px-4 sm:px-8 flex flex-row items-center gap-2 bg-stone-200 text-stone-900 text-sm md:text-base">
                 <div className="flex-1">
