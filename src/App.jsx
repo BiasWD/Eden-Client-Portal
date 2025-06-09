@@ -71,10 +71,10 @@ function App() {
   return (
     <>
       <Router>
-        <div className="h-screen bg-white">
+        <div className="min-h-screen bg-white">
           <Nav userName={userName} photoURL={photoURL} />
           <Sidebar />
-          <div className="h-full w-full md:w-5/6 ml-auto p-4 sm:p-8">
+          <div className="min-h-screen w-full md:w-5/6 ml-auto p-4 sm:p-8">
             <Routes>
               <Route
                 path="/"
