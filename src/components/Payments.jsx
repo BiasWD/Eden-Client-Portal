@@ -92,7 +92,7 @@ function Payments({ invoices, userName }) {
               <div className="text-xl text-white py-2 md:py-4 px-4 sm:px-8 bg-[#00954C] font-bold">
                 Billing Records
               </div>
-              <div className="text-xl font-bold py-2 md:py-4 px-4 sm:px-8 bg-stone-700 text-stone-200">
+              <div className="text-xl font-bold py-2 md:py-4 px-4 sm:px-8 bg-stone-200 text-stone-900">
                 Total Due:{" "}
                 <span className="text-black px-4 py-1 inline-flex mx-1 bg-white rounded-xl">
                   ${totalDue}
