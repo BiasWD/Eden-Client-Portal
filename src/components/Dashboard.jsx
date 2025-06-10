@@ -59,23 +59,23 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
           Log in or sign up to view your dashboard.
         </p>
       )}
-      <div className="rounded-xl shadow-xl border border-[#00954C] w-full p-4 sm:p-8 mt-4">
+      <div className="rounded-xl shadow-xl border border-[#00954C] bg-stone-200 w-full p-4 sm:p-8 mt-4">
         <div className=" flex w-full flex-col md:flex-row overflow-hidden rounded-lg">
-          <div className="text-xl text-center flex text-white bg-[#00954C] justify-center p-2 md:p-4 font-bold">
+          <div className="text-xl text-center flex text-stone-700 bg-white justify-center p-2 md:p-4 font-bold">
             Announcements
           </div>
-          <p className="p-4 md:text-lg text-center md:text-left bg-stone-200 w-full align-center">
+          <p className="p-4 md:text-lg text-center md:text-left bg-white w-full align-center">
             No new announcements
           </p>
         </div>
 
         {userName ? (
           <div className="w-full mt-4 sm:mt-8 flex flex-col sm:flex-row gap-4 sm:gap-8">
-            <div className=" bg-stone-200 rounded-lg overflow-hidden flex flex-col flex-1 justify-between">
-              <div className="text-xl text-center text-white p-2 md:p-4 bg-[#00954C] font-bold">
+            <div className=" bg-white rounded-lg overflow-hidden flex flex-col flex-1 justify-between">
+              <div className="text-xl text-center text-stone-700 p-2 md:p-4 font-bold">
                 Amount Due
               </div>
-              <p className="p-8 text-xl text-center">
+              <p className="p-8 text-4xl text-center">
                 <strong>${totalDue}</strong>
               </p>
               <Link className="w-fit mb-4 mx-auto" to="/payments">
@@ -85,8 +85,8 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
                 </button>
               </Link>
             </div>
-            <div className=" bg-stone-200 rounded-lg overflow-hidden flex flex-col justify-between flex-1">
-              <div className="text-xl text-center text-white p-2 md:p-4 bg-[#00954C] font-bold">
+            <div className=" bg-white rounded-lg overflow-hidden flex flex-col justify-between flex-1">
+              <div className="text-xl text-center text-stone-700 p-2 md:p-4 font-bold">
                 Recent Services
               </div>
 
@@ -113,7 +113,7 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
                 <FaLock />
                 <span className="pl-2 font-bold">Amount Due</span>
               </div>
-              <div className="py-4 px-4 bg-stone-200 sm:px-8 text-base">
+              <div className="py-4 px-4 bg-white sm:px-8 text-base">
                 {" "}
                 Please <strong>Sign In</strong> to view your amount due.
               </div>
@@ -123,7 +123,7 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
                 <FaLock />
                 <span className="pl-2 font-bold">Recent Services</span>
               </div>
-              <div className="py-4 bg-stone-200 px-4 sm:px-8 text-base">
+              <div className="py-4 bg-white px-4 sm:px-8 text-base">
                 {" "}
                 Please <strong>Sign In</strong> to view your recent services.
               </div>
