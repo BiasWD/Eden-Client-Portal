@@ -19,7 +19,7 @@ function Nav({ userName, photoURL }) {
   };
 
   return (
-    <nav className="bg-stone-900 border-b text-white shadow-lg border-[#00954C] px-4 py-2 flex justify-between items-center">
+    <nav className="bg-stone-900 border-b text-white md:shadow-lg border-[#00954C] px-4 py-2 flex justify-between items-center">
       <div className="flex items-center">
         <img src={Logo} alt="Logo" className="h-16 mr-3" />
         <span className="hidden sm:block text-xl font-bold">Client Portal</span>

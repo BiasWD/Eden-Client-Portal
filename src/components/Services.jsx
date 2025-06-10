@@ -54,7 +54,7 @@ function Services({ serviceData, pricePerMowTrim, userName, hasClientData }) {
             </div>
             <div className="w-full flex">
               <Link className="w-fit sm:my-4 mx-auto" to="/">
-                <button className="bg-[#00954C]  text-white flex flex-row rounded-lg cursor-pointer items-center gap-2 p-2 px-6 hover:bg-[#7BD650] transition duration-300">
+                <button className="bg-stone-700  text-white flex flex-row rounded-lg cursor-pointer items-center gap-2 p-2 px-6 hover:bg-[#7BD650] transition duration-300">
                   <span>Dashboard</span>
                   <FaArrowLeft />
                 </button>

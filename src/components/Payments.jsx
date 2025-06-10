@@ -33,7 +33,7 @@ function Payments({ invoices, userName }) {
       <div className="flex-1 text-left">
         <span className="font-bold text-stone-700">{invoice.description}</span>
       </div>
-      <div className="py-4 px-4 sm:px-8 flex flex-row w-full border border-stone-900 rounded-lg items-center gap-2 bg-stone-200 text-stone-900 text-sm md:text-base">
+      <div className="py-4 px-4 sm:px-8 flex flex-row w-full  rounded-lg items-center gap-2 bg-stone-200 text-stone-900 text-sm md:text-base">
         <div className="flex-1 flex flex-col">
           <span className="font-bold">Amount</span>
           <div className="flex-1">${invoice.amount}</div>
@@ -102,7 +102,7 @@ function Payments({ invoices, userName }) {
             </div>
             <div className="w-full flex">
               <Link className="w-fit sm:my-4 mx-auto" to="/">
-                <button className="bg-[#00954C]  text-white flex flex-row rounded-lg cursor-pointer items-center gap-2 p-2 px-6 hover:bg-[#7BD650] transition duration-300">
+                <button className="bg-stone-700 text-white flex flex-row rounded-lg cursor-pointer items-center gap-2 p-2 px-6 hover:bg-[#7BD650] transition duration-300">
                   <span>Dashboard</span>
                   <FaArrowLeft />
                 </button>

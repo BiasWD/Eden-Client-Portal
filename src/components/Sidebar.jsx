@@ -9,7 +9,7 @@ function Sidebar() {
       : "bg-stone-700 hover:bg-stone-900";
   };
   return (
-    <div className="w-full md:w-1/6  md:bg-stone-800 text-white rounded-br-xl h-auto md:min-h-screen flex flex-row md:flex-col md:absolute gap-2 p-2">
+    <div className="w-full md:w-1/6  md:bg-stone-800 border-b shadow-lg md:shadow-none border-stone-200 text-white md:rounded-br-xl h-auto md:min-h-screen flex flex-row md:flex-col md:absolute gap-2 p-2">
       <Link to="/" className="w-full">
         <p className={`py-4 text-center rounded-xl w-full ${isActive("/")}`}>
           Dashboard
