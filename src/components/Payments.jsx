@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaLock, FaArrowLeft } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-function Payments({ invoices, userName }) {
+function Payments({ invoices, userName, isAdmin }) {
   const today = new Date();
 
   const [totalDue, setTotalDue] = useState(0);
@@ -72,6 +72,10 @@ function Payments({ invoices, userName }) {
     </div>
   ));
 
+  const [addAmount, setAddAmount] = useState("");
+  const [addStatus, setAddStatus] = useState(false);
+  const [addDueDate, setAddDueDate] = useState("");
+
   return (
     <div className="flex max-w-[1080px] pb-8 mx-auto items-center flex-col">
       <h1 className="text-3xl text-[#00954C] hidden sm:block font-bold mt-0 md:mt-4 mx-4">
@@ -98,6 +102,40 @@ function Payments({ invoices, userName }) {
                   ${totalDue}
                 </span>
               </div>
+              {isAdmin ? (
+                <div className="pt-4 pb-4 md:pb-6 px-4 sm:px-8 flex flex-col items-center md:items-baseline border-t border-stone-200 gap-2 text-sm md:text-base">
+                  <div className="flex-1 text-left">
+                    <span className="font-bold text-stone-700">
+                      Add an Invoice
+                    </span>
+                  </div>
+                  <div className="py-4 px-4 sm:px-8 flex flex-row w-full  rounded-lg items-center gap-2 bg-stone-200 text-stone-900 text-sm md:text-base">
+                    <div className="flex-1 flex flex-col">
+                      <span className="font-bold">Amount</span>
+                      <div className="flex-1">$<input className="bg-white px-1 mx-1 rounded-lg" type="number" value={addAmount} onChange={(e) => setAddAmount(e.target.value)} /></div>
+                    </div>
+                    <div className="flex-1 flex flex-col">
+                      <span className="font-bold">Status</span>
+                      <div className="flex-1">
+                        <span>Paid? <input className="bg-white px-1 mx-1 rounded-lg" type="checkbox" checked={addStatus} onChange={(e) => setAddStatus(e.target.checked)} /></span>
+                      </div>
+                    </div>
+                    <div className="flex-1 flex flex-col">
+                      <span className="font-bold">Due Date</span>
+                      <div className="flex-1">
+                        <input className="bg-white px-1 mx-1 rounded-lg" type="date" value={addDueDate} onChange={(e) => setAddDueDate(e.target.value)} />
+                      </div>
+                    </div>
+                  </div>
+                  { addAmount && addDueDate ?
+                    <button className="bg-[#00954C] text-white cursor-pointer px-4 mx-auto py-2 rounded-lg mt-2 md:mt-4">
+                      Add Invoice
+                    </button> : ""
+                  }
+                </div>
+              ) : (
+                ""
+              )}
               <>{invoiceDivs}</>
             </div>
             <div className="w-full flex">

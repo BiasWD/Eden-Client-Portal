@@ -143,7 +143,7 @@ function App() {
                       />
                     </div>
                   ) : (
-                    <Payments invoices={isAdmin ? selectedClient?.invoices || [] : invoices} userName={userName} />
+                    <Payments isAdmin={isAdmin} invoices={isAdmin ? selectedClient?.invoices || [] : invoices} userName={userName} />
                   )
                 }
               />
