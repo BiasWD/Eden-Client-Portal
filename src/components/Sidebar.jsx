@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
-function Sidebar() {
+function Sidebar( { isAdmin } ) {
   const location = useLocation();
   const isActive = (path) => {
     return location.pathname === path
@@ -10,9 +10,9 @@ function Sidebar() {
   };
   return (
     <div className="w-full md:w-1/6  md:bg-stone-800 border-b shadow-lg md:shadow-none border-stone-200 text-white md:rounded-br-xl h-auto md:min-h-screen flex flex-row md:flex-col md:absolute gap-2 p-2">
-      <Link to="/" className="w-full">
+      <Link to={isAdmin ? "admin-dashboard" : "/"} className="w-full">
         <p className={`py-4 text-center rounded-xl w-full ${isActive("/")}`}>
-          Dashboard
+          {isAdmin ? "Admin" : "Dashboard"}
         </p>
       </Link>
       <Link to="/payments" className="w-full">

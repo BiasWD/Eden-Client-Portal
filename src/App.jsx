@@ -7,8 +7,9 @@ import Payments from "./components/Payments";
 import Services from "./components/Services";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import AdminDashboard from "./components/AdminDashboard";
 import { auth, db } from "./firebase";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, doc, getDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { ClipLoader } from "react-spinners";
 
@@ -20,6 +21,11 @@ function App() {
   const [pricePerMowTrim, setPricePerMowTrim] = useState(0);
   const [hasClientData, setHasClientData] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [allClients, setAllClients] = useState([]);
+  const [activeClient, setActiveClient] = useState(null);
+
+  const selectedClient = allClients.find(client => client.uid === activeClient);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -36,6 +42,28 @@ function App() {
         const uid = user.uid;
 
         try {
+          // Check if the user is an admin
+          const userRef = doc(db, "users", uid);
+          const userSnap = await getDoc(userRef);
+
+        if (userSnap.exists() && userSnap.data().isAdmin) {
+            console.log("User is an admin");
+            setIsAdmin(true);
+
+          // Fetch all clients for admin view
+          const clientsCollectionRef = collection(db, "clients");
+          const clientsSnapshot = await getDocs(clientsCollectionRef);
+          const clientData = clientsSnapshot.docs.map(doc => doc.data());
+          setAllClients(clientData);
+          console.log("All clients data loaded for admin:", clientData);
+          setIsLoading(false);
+          return;
+ } else {
+  setIsAdmin(false);
+ }
+
+
+
           const clientCollectionRef = collection(db, "clients");
           const q = query(clientCollectionRef, where("uid", "==", uid));
           const querySnapshot = await getDocs(q);
@@ -73,7 +101,7 @@ function App() {
       <Router>
         <div className="min-h-screen bg-white">
           <Nav userName={userName} photoURL={photoURL} />
-          <Sidebar />
+          <Sidebar isAdmin={isAdmin} />
           <div className="min-h-screen w-full md:w-5/6 ml-auto p-4 sm:p-8">
             <Routes>
               <Route
@@ -81,7 +109,7 @@ function App() {
                 element={
                   isLoading ? (
                     <div className="flex max-w-[1080px] mx-auto items-center flex-col">
-                      <h1 className="text-3xl text-[#00954C] font-bold m-4">
+                      <h1 className="text-3xl text-[#00954C] hidden sm:block font-bold mt-0 md:mt-4 mx-4">
                         Dashboard
                       </h1>
                       <ClipLoader
@@ -105,7 +133,7 @@ function App() {
                 element={
                   isLoading ? (
                     <div className="flex max-w-[1080px] mx-auto items-center flex-col">
-                      <h1 className="text-3xl text-[#00954C] font-bold m-4">
+                      <h1 className="text-3xl text-[#00954C] hidden sm:block font-bold mt-0 md:mt-4 mx-4">
                         Payments
                       </h1>
                       <ClipLoader
@@ -115,7 +143,7 @@ function App() {
                       />
                     </div>
                   ) : (
-                    <Payments invoices={invoices} userName={userName} />
+                    <Payments invoices={isAdmin ? selectedClient?.invoices || [] : invoices} userName={userName} />
                   )
                 }
               />
@@ -124,7 +152,7 @@ function App() {
                 element={
                   isLoading ? (
                     <div className="flex max-w-[1080px] mx-auto items-center flex-col">
-                      <h1 className="text-3xl text-[#00954C] font-bold m-4">
+                      <h1 className="text-3xl text-[#00954C] hidden sm:block font-bold mt-0 md:mt-4 mx-4">
                         Services
                       </h1>
                       <ClipLoader
@@ -135,10 +163,33 @@ function App() {
                     </div>
                   ) : (
                     <Services
-                      serviceData={serviceData}
+                      serviceData={isAdmin ? selectedClient?.serviceHistory || [] : serviceData}
                       pricePerMowTrim={pricePerMowTrim}
                       userName={userName}
                       hasClientData={hasClientData}
+                    />
+                  )
+                }
+              />
+              <Route
+                path="/admin-dashboard"
+                element={
+                  isLoading ? (
+                    <div className="flex max-w-[1080px] mx-auto items-center flex-col">
+                      <h1 className="text-3xl text-[#00954C] hidden sm:block font-bold mt-0 md:mt-4 mx-4">
+                        Admin Dashboard
+                      </h1>
+                      <ClipLoader
+                        color="#00954C"
+                        loading={isLoading}
+                        size={100}
+                      />
+                    </div>
+                  ) : (
+                    <AdminDashboard
+                      userName={userName}
+                      allClients={allClients}
+                      setActiveClient={setActiveClient}
                     />
                   )
                 }

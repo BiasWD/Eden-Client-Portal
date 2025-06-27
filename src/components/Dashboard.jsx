@@ -59,7 +59,7 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
           Log in or sign up to view your dashboard.
         </p>
       )}
-      <div className="rounded-xl shadow-xl border border-[#00954C] bg-stone-200 w-full p-4 sm:p-8 mt-4">
+      <div className="rounded-xl shadow-xl border border-t-[1rem] border-[#00954C] bg-stone-200 w-full p-4 sm:p-8 mt-4">
         <div className=" flex w-full flex-col md:flex-row overflow-hidden rounded-lg">
           <div className="text-xl text-center flex text-stone-700 bg-white justify-center p-2 md:p-4 font-bold">
             Announcements

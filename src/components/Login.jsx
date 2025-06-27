@@ -90,11 +90,16 @@ function Login() {
           uid: user.uid,
         });
         console.log("Google sign-up successful", user);
+        navigate("/");
       } else {
+        const userData = userSnap.data();
         console.log("Google sign-in successful", user);
+        if (userData.isAdmin) {
+          navigate("/admin-dashboard");
+        } else {
+          navigate("/");
+        }
       }
-
-      navigate("/");
     } catch (error) {
       if (error.code === "auth/popup-closed-by-user") {
         console.warn("Google popup closed by user.");
