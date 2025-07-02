@@ -9,7 +9,16 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import AdminDashboard from "./components/AdminDashboard";
 import { auth, db } from "./firebase";
-import { collection, query, where, getDocs, doc, getDoc } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  doc,
+  getDoc,
+  updateDoc,
+  arrayUnion,
+} from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { ClipLoader } from "react-spinners";
 
@@ -25,7 +34,9 @@ function App() {
   const [allClients, setAllClients] = useState([]);
   const [activeClient, setActiveClient] = useState(null);
 
-  const selectedClient = allClients.find(client => client.uid === activeClient);
+  const selectedClient = allClients.find(
+    (client) => client.uid === activeClient
+  );
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -46,23 +57,21 @@ function App() {
           const userRef = doc(db, "users", uid);
           const userSnap = await getDoc(userRef);
 
-        if (userSnap.exists() && userSnap.data().isAdmin) {
+          if (userSnap.exists() && userSnap.data().isAdmin) {
             console.log("User is an admin");
             setIsAdmin(true);
 
-          // Fetch all clients for admin view
-          const clientsCollectionRef = collection(db, "clients");
-          const clientsSnapshot = await getDocs(clientsCollectionRef);
-          const clientData = clientsSnapshot.docs.map(doc => doc.data());
-          setAllClients(clientData);
-          console.log("All clients data loaded for admin:", clientData);
-          setIsLoading(false);
-          return;
- } else {
-  setIsAdmin(false);
- }
-
-
+            // Fetch all clients for admin view
+            const clientsCollectionRef = collection(db, "clients");
+            const clientsSnapshot = await getDocs(clientsCollectionRef);
+            const clientData = clientsSnapshot.docs.map((doc) => doc.data());
+            setAllClients(clientData);
+            console.log("All clients data loaded for admin:", clientData);
+            setIsLoading(false);
+            return;
+          } else {
+            setIsAdmin(false);
+          }
 
           const clientCollectionRef = collection(db, "clients");
           const q = query(clientCollectionRef, where("uid", "==", uid));
@@ -96,6 +105,38 @@ function App() {
 
     return () => unsubscribe();
   }, []);
+
+  const addInvoice = async (invoice) => {
+    if (!activeClient) {
+      console.error("No active client selected for adding invoice.");
+      return;
+    }
+    try {
+      // Add the invoice to the active client's invoices
+      const clientCollectionRef = collection(db, "clients");
+      const q = query(clientCollectionRef, where("uid", "==", activeClient));
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        const clientRef = doc(db, "clients", querySnapshot.docs[0].id);
+        await updateDoc(clientRef, {
+          invoices: arrayUnion(invoice),
+        });
+        console.log("Invoice added successfully:", invoice);
+
+        // Re-fetch and update the invoices state
+        const clientsCollectionRef = collection(db, "clients");
+        const clientsSnapshot = await getDocs(clientsCollectionRef);
+        const clientData = clientsSnapshot.docs.map((doc) => doc.data());
+        setAllClients(clientData); // This triggers a refresh of selectedClient.invoices
+      } else {
+        console.error("No client found for adding invoice.");
+      }
+    } catch (error) {
+      console.error("Error adding invoice:", error);
+    }
+  };
+
   return (
     <>
       <Router>
@@ -143,7 +184,14 @@ function App() {
                       />
                     </div>
                   ) : (
-                    <Payments isAdmin={isAdmin} invoices={isAdmin ? selectedClient?.invoices || [] : invoices} userName={userName} />
+                    <Payments
+                      isAdmin={isAdmin}
+                      invoices={
+                        isAdmin ? selectedClient?.invoices || [] : invoices
+                      }
+                      addInvoice={addInvoice}
+                      userName={userName}
+                    />
                   )
                 }
               />
@@ -163,7 +211,11 @@ function App() {
                     </div>
                   ) : (
                     <Services
-                      serviceData={isAdmin ? selectedClient?.serviceHistory || [] : serviceData}
+                      serviceData={
+                        isAdmin
+                          ? selectedClient?.serviceHistory || []
+                          : serviceData
+                      }
                       pricePerMowTrim={pricePerMowTrim}
                       userName={userName}
                       hasClientData={hasClientData}
