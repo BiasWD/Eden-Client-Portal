@@ -16,6 +16,7 @@ import {
   getDocs,
   doc,
   getDoc,
+  setDoc,
   updateDoc,
   arrayUnion,
 } from "firebase/firestore";
@@ -137,12 +138,78 @@ function App() {
     }
   };
 
+  const addService = async (service) => {
+    if (!activeClient) {
+      console.error("No active client selected for adding service.");
+      return;
+    }
+    try {
+      // Add the service to the active client's serviceHistory
+      const clientCollectionRef = collection(db, "clients");
+      const q = query(clientCollectionRef, where("uid", "==", activeClient));
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        const clientRef = doc(db, "clients", querySnapshot.docs[0].id);
+        await updateDoc(clientRef, {
+          serviceHistory: arrayUnion(service),
+        });
+        console.log("Service added successfully:", service);
+
+        // Re-fetch and update the clients state
+        const clientsCollectionRef = collection(db, "clients");
+        const clientsSnapshot = await getDocs(clientsCollectionRef);
+        const clientData = clientsSnapshot.docs.map((doc) => doc.data());
+        setAllClients(clientData); // Refresh selectedClient.serviceHistory
+      } else {
+        console.error("No client found for adding service.");
+      }
+    } catch (error) {
+      console.error("Error adding service:", error);
+    }
+  };
+
+  const addClient = async (clientData, clientNumber) => {
+    try {
+      const docId = `client_${String(clientNumber).padStart(4, "0")}`;
+      const clientRef = doc(db, "clients", docId);
+
+      // Check if the document already exists
+      const existing = await getDoc(clientRef);
+      if (existing.exists()) {
+        alert(`Client number ${clientNumber} already exists!`);
+        return;
+      }
+
+      // If not, add the new client
+      await setDoc(doc(db, "clients", docId), {
+        ...clientData,
+      });
+      console.log("Client added:", docId, clientData);
+
+      // Refresh clients list
+      const clientsCollectionRef = collection(db, "clients");
+      const clientsSnapshot = await getDocs(clientsCollectionRef);
+      const clientDataList = clientsSnapshot.docs.map((doc) => doc.data());
+      setAllClients(clientDataList);
+    } catch (error) {
+      console.error("Error adding client:", error);
+    }
+  };
+
   return (
     <>
       <Router>
         <div className="min-h-screen bg-white">
           <Nav userName={userName} photoURL={photoURL} />
-          <Sidebar isAdmin={isAdmin} />
+          <Sidebar
+            isAdmin={isAdmin}
+            setActiveClient={setActiveClient}
+            activeClient={activeClient}
+            activeClientName={selectedClient?.name}
+            activeClientPrice={selectedClient?.priceMowTrim}
+            activeClientUid={selectedClient?.uid}
+          />
           <div className="min-h-screen w-full md:w-5/6 ml-auto p-4 sm:p-8">
             <Routes>
               <Route
@@ -189,6 +256,7 @@ function App() {
                       invoices={
                         isAdmin ? selectedClient?.invoices || [] : invoices
                       }
+                      setActiveClient={setActiveClient}
                       addInvoice={addInvoice}
                       userName={userName}
                     />
@@ -216,9 +284,12 @@ function App() {
                           ? selectedClient?.serviceHistory || []
                           : serviceData
                       }
+                      isAdmin={isAdmin}
+                      addService={addService}
                       pricePerMowTrim={pricePerMowTrim}
                       userName={userName}
                       hasClientData={hasClientData}
+                      setActiveClient={setActiveClient}
                     />
                   )
                 }
@@ -242,6 +313,7 @@ function App() {
                       userName={userName}
                       allClients={allClients}
                       setActiveClient={setActiveClient}
+                      addClient={addClient}
                     />
                   )
                 }

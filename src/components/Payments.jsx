@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { FaLock, FaArrowLeft } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { Timestamp } from "firebase/firestore";
-function Payments({ invoices, userName, isAdmin, addInvoice }) {
+function Payments({ invoices, userName, isAdmin, addInvoice, setActiveClient }) {
   const today = new Date();
 
   const [totalDue, setTotalDue] = useState(0);
@@ -186,8 +186,14 @@ function Payments({ invoices, userName, isAdmin, addInvoice }) {
               <>{invoiceDivs}</>
             </div>
             <div className="w-full flex">
-              <Link className="w-fit sm:my-4 mx-auto" to="/">
-                <button className="bg-stone-700 text-white flex flex-row rounded-lg cursor-pointer items-center gap-2 p-2 px-6 hover:bg-[#7BD650] transition duration-300">
+              <Link
+                className="w-fit sm:my-4 mx-auto"
+                to={isAdmin ? "/admin-dashboard" : "/"}
+              >
+                <button
+                  onClick={isAdmin ? () => setActiveClient("") : undefined}
+                  className="bg-stone-700 text-white flex flex-row rounded-lg cursor-pointer items-center gap-2 p-2 px-6 hover:bg-[#7BD650] transition duration-300"
+                >
                   <span>Dashboard</span>
                   <FaArrowLeft />
                 </button>

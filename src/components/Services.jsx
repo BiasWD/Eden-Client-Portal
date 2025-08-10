@@ -1,7 +1,16 @@
 import { FaLock, FaArrowLeft } from "react-icons/fa6";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
-function Services({ serviceData, pricePerMowTrim, userName, hasClientData }) {
+function Services({
+  serviceData,
+  pricePerMowTrim,
+  userName,
+  hasClientData,
+  isAdmin,
+  addService,
+  setActiveClient,
+}) {
   const sortedServices = [...serviceData].sort(
     (a, b) => b.date.toDate() - a.date.toDate()
   );
@@ -15,6 +24,14 @@ function Services({ serviceData, pricePerMowTrim, userName, hasClientData }) {
       <div className="flex-1">{service.date.toDate().toLocaleDateString()}</div>
     </div>
   ));
+
+  const [addServiceType, setAddServiceType] = useState("");
+  const [addServiceDate, setAddServiceDate] = useState("");
+
+  const service = {
+    date: new Date(addServiceDate),
+    type: addServiceType,
+  };
 
   return (
     <div className="flex max-w-[1080px] pb-8 mx-auto items-center flex-col">
@@ -50,11 +67,50 @@ function Services({ serviceData, pricePerMowTrim, userName, hasClientData }) {
                   <span className="font-bold">Date Completed</span>
                 </div>
               </div>
+              {isAdmin ? (
+                <div className="pt-4 pb-4 md:pb-6 px-4 sm:px-8 flex flex-col items-center md:items-baseline border-t border-stone-200 gap-2 text-sm md:text-base">
+                  <div className="flex-1 text-left">
+                    <span className="font-bold text-stone-700">
+                      Add a Service:
+                    </span>
+                    <input
+                      className="bg-white border px-1 mx-1 rounded-lg"
+                      type="text"
+                      placeholder="Service Type"
+                      value={addServiceType}
+                      onChange={(e) => setAddServiceType(e.target.value)}
+                    />
+                    <input
+                      className="bg-white border px-1 mx-1 rounded-lg"
+                      type="date"
+                      value={addServiceDate}
+                      onChange={(e) => setAddServiceDate(e.target.value)}
+                    />
+                    <button
+                      className="bg-[#00954C] text-white px-2 py-1 rounded-lg hover:bg-[#7BD650] transition duration-300"
+                      onClick={() => {
+                        if (addServiceType && addServiceDate) {
+                          addService(service);
+                          setAddServiceType("");
+                          setAddServiceDate("");
+                        }
+                      }}
+                    >
+                      Add Service
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
               <>{serviceDivs}</>
             </div>
             <div className="w-full flex">
-              <Link className="w-fit sm:my-4 mx-auto" to="/">
-                <button className="bg-stone-700  text-white flex flex-row rounded-lg cursor-pointer items-center gap-2 p-2 px-6 hover:bg-[#7BD650] transition duration-300">
+              <Link className="w-fit sm:my-4 mx-auto" to={isAdmin ? "/admin-dashboard" : "/"}>
+                <button
+                  onClick={isAdmin ? () => setActiveClient("") : undefined}
+                  className="bg-stone-700 text-white flex flex-row rounded-lg cursor-pointer items-center gap-2 p-2 px-6 hover:bg-[#7BD650] transition duration-300"
+                >
                   <span>Dashboard</span>
                   <FaArrowLeft />
                 </button>
