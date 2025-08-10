@@ -41,7 +41,7 @@ function AdminDashboard({ userName, allClients, setActiveClient, addClient }) {
 
   const clientToAdd = {
     clientNumber: addClientNumber ? Number(addClientNumber) : null,
-    uid: "",
+    uid: `temp-uid-${addClientNumber}`,
     name: addClientName || "New Client",
     priceMowTrim: addClientPrice ? Number(addClientPrice) : null,
     invoices: [],
