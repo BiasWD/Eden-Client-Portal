@@ -99,6 +99,7 @@ function App() {
         setPricePerMowTrim("undefined");
         setServiceData([]);
         setInvoices([]);
+        setAllClients([]);
       }
 
       setIsLoading(false);

@@ -16,7 +16,7 @@ function Sidebar({ isAdmin, setActiveClient, activeClient, activeClientName, act
           {isAdmin ? "Admin" : "Dashboard"}
         </p>
       </Link>
-      {activeClient ? (
+      {activeClient || !isAdmin ? (
         <>
       <Link to="/payments" className="w-full">
         <p
