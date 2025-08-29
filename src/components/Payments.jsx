@@ -112,8 +112,8 @@ function Payments({ invoices, userName, isAdmin, addInvoice, setActiveClient }) 
                 </span>
               </div>
               {isAdmin ? (
-                <div className="pt-4 pb-4 md:pb-6 px-4 sm:px-8 flex flex-col items-center md:items-baseline border-t border-stone-200 gap-2 text-sm md:text-base">
-                  <div className="flex-1 text-left">
+                <div className="pt-4 pb-4 md:pb-6 px-4 sm:px-8 flex flex-col items-center md:items-baseline bg-green-50 border border-stone-700 rounded-lg m-4 gap-2 text-sm md:text-base">
+                  <div className="flex items-center justify-center w-full text-left">
                     <span className="font-bold text-stone-700">
                       Add an Invoice:
                     </span>
@@ -124,20 +124,19 @@ function Payments({ invoices, userName, isAdmin, addInvoice, setActiveClient }) 
                       onChange={(e) => setAddDescription(e.target.value)}
                     />
                   </div>
-                  <div className="py-4 px-4 sm:px-8 flex flex-row w-full  rounded-lg items-center gap-2 bg-stone-200 text-stone-900 text-sm md:text-base">
-                    <div className="flex-1 flex flex-col">
-                      <span className="font-bold">Amount</span>
+                  <div className="py-4 px-4 sm:px-8 flex justify-between flex-row flex-wrap w-full  rounded-lg items-center gap-2 text-stone-900 text-sm md:text-base">
+                    <div className="flex flex-col w-full sm:w-auto">
+                      <span className="font-bold">Amount: $</span>
                       <div className="flex-1">
-                        $
                         <input
-                          className="bg-white px-1 mx-1 rounded-lg"
+                          className="bg-white border px-1 mx-1 rounded-lg"
                           type="number"
                           value={addAmount}
                           onChange={(e) => setAddAmount(e.target.value)}
                         />
                       </div>
                     </div>
-                    <div className="flex-1 flex flex-col">
+                    <div className="flex flex-col flex-nowrap w-full sm:w-auto">
                       <span className="font-bold">Status</span>
                       <div className="flex-1">
                         <span>
@@ -151,11 +150,11 @@ function Payments({ invoices, userName, isAdmin, addInvoice, setActiveClient }) 
                         </span>
                       </div>
                     </div>
-                    <div className="flex-1 flex flex-col">
+                    <div className="flex flex-col w-full sm:w-auto">
                       <span className="font-bold">Due Date</span>
                       <div className="flex-1">
                         <input
-                          className="bg-white px-1 mx-1 rounded-lg"
+                          className="bg-white border px-1 mx-1 rounded-lg"
                           type="date"
                           value={addDueDate}
                           onChange={(e) => setAddDueDate(e.target.value)}

@@ -68,26 +68,26 @@ function Services({
                 </div>
               </div>
               {isAdmin ? (
-                <div className="pt-4 pb-4 md:pb-6 px-4 sm:px-8 flex flex-col items-center md:items-baseline border-t border-stone-200 gap-2 text-sm md:text-base">
-                  <div className="flex-1 text-left">
-                    <span className="font-bold text-stone-700">
+                <div className="pt-4 pb-4 px-4 sm:px-8 flex flex-col items-center md:items-baseline bg-green-50 border border-stone-700 rounded-lg m-4 gap-2 text-sm md:text-base">
+                  <div className="flex-1 text-center">
+                    <span className="font-bold text-stone-700 m-2 w-full sm:w-auto">
                       Add a Service:
                     </span>
                     <input
-                      className="bg-white border px-1 mx-1 rounded-lg"
+                      className="bg-white border px-1 m-2  rounded-lg w-full sm:w-auto"
                       type="text"
                       placeholder="Service Type"
                       value={addServiceType}
                       onChange={(e) => setAddServiceType(e.target.value)}
                     />
                     <input
-                      className="bg-white border px-1 mx-1 rounded-lg"
+                      className="bg-white border px-1 m-2 rounded-lg w-full sm:w-auto"
                       type="date"
                       value={addServiceDate}
                       onChange={(e) => setAddServiceDate(e.target.value)}
                     />
                     <button
-                      className="bg-[#00954C] text-white px-2 py-1 rounded-lg hover:bg-[#7BD650] transition duration-300"
+                      className="bg-[#00954C] text-white m-2 px-2 py-1 rounded-lg hover:bg-[#7BD650] transition duration-300"
                       onClick={() => {
                         if (addServiceType && addServiceDate) {
                           addService(service);

@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 function AdminDashboard({ userName, allClients, setActiveClient, addClient }) {
   const clientList = allClients.map((client, index) => (
-    <div key={index} className="p-4 border-b flex flex-row border-stone-200">
-      <div>
+    <div key={index} className="p-4 border-b flex flex-row gap-4 border-stone-200">
+      <div className="flex flex-1 flex-col text-center justify-center">
         <div className="text-lg font-semibold text-stone-700">
           {client.name}
         </div>
@@ -13,19 +13,19 @@ function AdminDashboard({ userName, allClients, setActiveClient, addClient }) {
           Mow/Trim Price: ${client.priceMowTrim}
         </div>
       </div>
-      <div className="flex flex-row items-center">
-        <Link to={"/payments"}>
+      <div className="flex flex-1 flex-row flex-wrap gap-2 items-center">
+        <Link to={"/payments"} className="w-full sm:w-auto">
           <button
             onClick={() => setActiveClient(client.uid)}
-            className="bg-[#00954C] cursor-pointer text-white px-4 py-2 rounded-lg ml-4"
+            className="bg-[#00954C] cursor-pointer text-white w-full px-4 py-2 rounded-lg"
           >
             Payments
           </button>
         </Link>
-        <Link to={"/services"}>
+        <Link to={"/services"} className="w-full sm:w-auto">
           <button
             onClick={() => setActiveClient(client.uid)}
-            className="bg-[#00954C] cursor-pointer text-white px-4 py-2 rounded-lg ml-4"
+            className="bg-[#00954C] cursor-pointer text-white w-full px-4 py-2 rounded-lg"
           >
             Services
           </button>
@@ -73,7 +73,7 @@ function AdminDashboard({ userName, allClients, setActiveClient, addClient }) {
             Clients
           </div>
           {addingClient ? (
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center bg-stone-200 border-1 border-stone-700 rounded-lg py-4 mx-4">
               <div className="flex justify-between items-center w-1/2">
                 <p className="flex font-bold">Add Client:</p>
                 <button
@@ -83,27 +83,27 @@ function AdminDashboard({ userName, allClients, setActiveClient, addClient }) {
                   Cancel
                 </button>
               </div>
-              <div className="flex flex-row items-center gap-4 justify-between p-4">
+              <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 justify-between p-4">
                 <input
                   type="number"
                   placeholder="Client Number"
                   value={addClientNumber}
                   onChange={(e) => setAddClientNumber(e.target.value)}
-                  className="p-2 border rounded-lg w-full mb-2"
+                  className="bg-white p-2 border rounded-lg w-full mb-2 sm:mb-0"
                 />
                 <input
                   type="text"
                   placeholder="Client Name"
                   value={addClientName}
                   onChange={(e) => setAddClientName(e.target.value)}
-                  className="p-2 border rounded-lg w-full mb-2"
+                  className="bg-white p-2 border rounded-lg w-full mb-2 sm:mb-0"
                 />
                 <input
                   type="number"
                   placeholder="Mow/Trim Price"
                   value={addClientPrice}
                   onChange={(e) => setAddClientPrice(e.target.value)}
-                  className="p-2 border rounded-lg w-full mb-2"
+                  className="bg-white p-2 border rounded-lg w-full sm:mb-0"
                 />
               </div>
               <button
