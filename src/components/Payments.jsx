@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { FaLock, FaArrowLeft } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { Timestamp } from "firebase/firestore";
-function Payments({ invoices, userName, isAdmin, addInvoice, setActiveClient }) {
+import { FaCheck } from "react-icons/fa6";
+function Payments({ invoices, userName, isAdmin, addInvoice, updateInvoiceStatus, setActiveClient }) {
   const today = new Date();
 
   const [totalDue, setTotalDue] = useState(0);
@@ -61,6 +62,12 @@ function Payments({ invoices, userName, isAdmin, addInvoice, setActiveClient }) 
                 ? "Paid"
                 : "Unpaid"}
             </span>
+            {isAdmin && invoice.isPaid === false ? (
+              <button className="group font-bold inline-flex items-center flex-row gap-1 rounded-xl text-sm px-2 m-2 w-full sm:w-auto bg-stone-700 text-[#7BD650] hover:bg-[#00954C] hover:text-white transition duration-200 cursor-pointer"
+              onClick={() => updateInvoiceStatus(invoice.id, true)}>
+                <span>Paid?</span><span className="hidden group-hover:block"><FaCheck /></span>
+              </button>
+            ) : undefined}
           </div>
         </div>
         <div className="flex-1 flex flex-col">
@@ -79,6 +86,7 @@ function Payments({ invoices, userName, isAdmin, addInvoice, setActiveClient }) 
   const [addDueDate, setAddDueDate] = useState("");
 
   const invoice = {
+    id: crypto.randomUUID(),
     description: addDescription,
     amount: Number(addAmount),
     isPaid: addStatus,

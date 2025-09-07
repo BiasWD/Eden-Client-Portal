@@ -139,6 +139,41 @@ function App() {
     }
   };
 
+  const updateInvoiceStatus = async (invoiceId, isPaid) => {
+    if (!activeClient) {
+      console.error("No active client selected for updating invoice status.");
+      return;
+    }
+    try {
+      const clientCollectionRef = collection(db, "clients");
+      const q = query(clientCollectionRef, where("uid", "==", activeClient));
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        const clientRef = doc(db, "clients", querySnapshot.docs[0].id);
+        const clientDoc = await getDoc(clientRef);
+        const currentInvoices = clientDoc.data().invoices;
+
+        // Update the isPaid status of the matching invoice
+        const updatedInvoices = currentInvoices.map((invoice) => {
+          if (invoice.id === invoiceId) {
+            return { ...invoice, isPaid };
+          } else {
+            return invoice;
+          }
+        });
+
+        await updateDoc(clientRef, { invoices: updatedInvoices });
+
+        // Refresh the clients list
+        const newSnapshot = await getDocs(clientCollectionRef);
+        setAllClients(newSnapshot.docs.map((doc) => doc.data()));
+      }
+    } catch (error) {
+      console.error("Error updating invoice status:", error);
+    }
+  };
+
   const addService = async (service) => {
     if (!activeClient) {
       console.error("No active client selected for adding service.");
@@ -259,6 +294,7 @@ function App() {
                       }
                       setActiveClient={setActiveClient}
                       addInvoice={addInvoice}
+                      updateInvoiceStatus={updateInvoiceStatus}
                       userName={userName}
                     />
                   )

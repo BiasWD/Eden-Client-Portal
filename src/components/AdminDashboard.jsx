@@ -4,7 +4,10 @@ import { Link } from "react-router-dom";
 
 function AdminDashboard({ userName, allClients, setActiveClient, addClient }) {
   const clientList = allClients.map((client, index) => (
-    <div key={index} className="p-4 border-b flex flex-row gap-4 border-stone-200">
+    <div
+      key={index}
+      className="p-4 border-b flex flex-row gap-4 border-stone-200"
+    >
       <div className="flex flex-1 flex-col text-center justify-center">
         <div className="text-lg font-semibold text-stone-700">
           {client.name}
