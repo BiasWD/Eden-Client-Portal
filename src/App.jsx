@@ -18,30 +18,51 @@ import {
   getDoc,
   setDoc,
   updateDoc,
+  addDoc,
   arrayUnion,
+  serverTimestamp,
+  writeBatch,
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { ClipLoader } from "react-spinners";
 
 function App() {
-  const [userName, setUserName] = useState("");
-  const [photoURL, setPhotoURL] = useState("");
-  const [serviceData, setServiceData] = useState([]);
-  const [invoices, setInvoices] = useState([]);
-  const [pricePerMowTrim, setPricePerMowTrim] = useState(0);
-  const [hasClientData, setHasClientData] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [allClients, setAllClients] = useState([]);
-  const [activeClient, setActiveClient] = useState(null);
+  // === USER AUTHENTICATION STATE ===
+  const [userName, setUserName] = useState(""); // Stores the logged-in user's display name
+  const [photoURL, setPhotoURL] = useState(""); // Stores the user's profile photo URL
+  const [isAdmin, setIsAdmin] = useState(false); // Tracks if current user has admin privileges
 
+  // === CLIENT DATA STATE ===
+  const [serviceData, setServiceData] = useState([]); // Individual client's service history
+  const [invoices, setInvoices] = useState([]); // Individual client's invoices
+  const [pricePerMowTrim, setPricePerMowTrim] = useState(0); // Client's base service price
+  const [hasClientData, setHasClientData] = useState(false); // Whether client data exists
+
+  // === ADMIN AND CLIENT MANAGEMENT STATE ===
+  const [allClients, setAllClients] = useState([]); // List of all clients (admin only)
+  const [activeClient, setActiveClient] = useState(null); // Currently selected client (admin view)
+
+  // === UI STATE ===
+  const [isLoading, setIsLoading] = useState(false); // Loading state for data fetching
+  const [sideBarOpen, setSideBarOpen] = useState(true); // State to manage sidebar visibility on small screens
+  const [announcements, setAnnouncements] = useState([]); // Store active announcements
+
+  // Find the currently selected client from allClients array based on activeClient ID
   const selectedClient = allClients.find(
     (client) => client.uid === activeClient
   );
 
+  // Toggle the sidebar visibility on small screens
+  const toggleSidebar = () => {
+    setSideBarOpen(!sideBarOpen);
+  };
+
+  // === AUTHENTICATION AND DATA FETCHING EFFECT ===
+  // This effect runs when the component mounts and handles user authentication state changes
   useEffect(() => {
+    // Subscribe to Firebase auth state changes
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      setIsLoading(true);
+      setIsLoading(true); // Start loading state while we fetch data
 
       if (user) {
         console.log("User logged in:", user);
@@ -52,6 +73,37 @@ function App() {
         setPhotoURL(user.photoURL || "");
 
         const uid = user.uid;
+
+        // === ANNOUNCEMENT MANAGEMENT ===
+        /**
+         * Fetches the currently active announcement from Firestore
+         * Only one announcement should be active at a time
+         * When adding new announcements, make sure to set previous ones to inactive
+         */
+        const getAnnouncements = async () => {
+          try {
+            // Query Firestore for the active announcement
+            const q = query(
+              collection(db, "announcements"),
+              where("isActive", "==", true) // Only get announcements marked as active
+            );
+
+            // Get the documents and transform them to a usable format
+            const snapshot = await getDocs(q);
+            const announcements = snapshot.docs.map((doc) => ({
+              id: doc.id, // Keep the document ID for reference
+              ...doc.data(), // Spread in all the announcement data
+            }));
+
+            setAnnouncements(announcements);
+            console.log("Active announcement loaded:", announcements);
+          } catch (error) {
+            console.error("Error fetching announcement:", error);
+          }
+        };
+
+        // Fetch announcements for all authenticated users
+        await getAnnouncements();
 
         try {
           // Check if the user is an admin
@@ -108,13 +160,24 @@ function App() {
     return () => unsubscribe();
   }, []);
 
+  // === INVOICE MANAGEMENT FUNCTIONS ===
+  /**
+   * Adds a new invoice to the selected client's records
+   * @param {Object} invoice - The invoice object to add
+   * @param {string} invoice.id - Unique identifier for the invoice
+   * @param {string} invoice.description - Description of the service
+   * @param {number} invoice.amount - Amount due
+   * @param {boolean} invoice.isPaid - Payment status
+   * @param {Date} invoice.dueDate - Due date for the invoice
+   */
   const addInvoice = async (invoice) => {
+    // Safety check: ensure we have an active client selected
     if (!activeClient) {
       console.error("No active client selected for adding invoice.");
       return;
     }
     try {
-      // Add the invoice to the active client's invoices
+      // Query Firestore to find the active client's document
       const clientCollectionRef = collection(db, "clients");
       const q = query(clientCollectionRef, where("uid", "==", activeClient));
       const querySnapshot = await getDocs(q);
@@ -139,12 +202,19 @@ function App() {
     }
   };
 
+  /**
+   * Updates the payment status of a specific invoice
+   * @param {string} invoiceId - The ID of the invoice to update
+   * @param {boolean} isPaid - The new payment status
+   */
   const updateInvoiceStatus = async (invoiceId, isPaid) => {
+    // Safety check: ensure we have an active client selected
     if (!activeClient) {
       console.error("No active client selected for updating invoice status.");
       return;
     }
     try {
+      // Query Firestore to find the client's document
       const clientCollectionRef = collection(db, "clients");
       const q = query(clientCollectionRef, where("uid", "==", activeClient));
       const querySnapshot = await getDocs(q);
@@ -174,13 +244,21 @@ function App() {
     }
   };
 
+  // === SERVICE MANAGEMENT FUNCTIONS ===
+  /**
+   * Adds a new service record to the selected client's history
+   * @param {Object} service - The service record to add
+   * @param {Date} service.date - Date the service was performed
+   * @param {string} service.type - Type of service performed
+   */
   const addService = async (service) => {
+    // Safety check: ensure we have an active client selected
     if (!activeClient) {
       console.error("No active client selected for adding service.");
       return;
     }
     try {
-      // Add the service to the active client's serviceHistory
+      // Query Firestore to find the client and add service to their history
       const clientCollectionRef = collection(db, "clients");
       const q = query(clientCollectionRef, where("uid", "==", activeClient));
       const querySnapshot = await getDocs(q);
@@ -205,12 +283,19 @@ function App() {
     }
   };
 
+  // === CLIENT MANAGEMENT FUNCTIONS ===
+  /**
+   * Creates a new client in the database with a formatted client number
+   * @param {Object} clientData - The client's information
+   * @param {string} clientNumber - Unique client identifier number
+   */
   const addClient = async (clientData, clientNumber) => {
     try {
+      // Create a formatted document ID (e.g., client_0001)
       const docId = `client_${String(clientNumber).padStart(4, "0")}`;
       const clientRef = doc(db, "clients", docId);
 
-      // Check if the document already exists
+      // Prevent duplicate client numbers
       const existing = await getDoc(clientRef);
       if (existing.exists()) {
         alert(`Client number ${clientNumber} already exists!`);
@@ -233,11 +318,52 @@ function App() {
     }
   };
 
+  // === ANNOUNCEMENT MANAGEMENT FUNCTIONS ===
+  /**
+   * Updates the active announcement in Firestore
+   * Only one announcement can be active at a time
+   * @param {string} message - The announcement message to display
+   */
+  const setAnnouncement = async (message) => {
+    try {
+      // First, deactivate any existing active announcements
+      const q = query(
+        collection(db, "announcements"),
+        where("isActive", "==", true)
+      );
+      const snapshot = await getDocs(q);
+
+      // Deactivate old announcements
+      const batch = writeBatch(db);
+      snapshot.docs.forEach((doc) => {
+        batch.update(doc.ref, { isActive: false });
+      });
+      await batch.commit();
+
+      // Create new active announcement
+      const announcementRef = collection(db, "announcements");
+      await addDoc(announcementRef, {
+        message,
+        createdAt: serverTimestamp(),
+        isActive: true,
+      });
+
+      // Refresh announcements
+      await getAnnouncements();
+    } catch (error) {
+      console.error("Error setting announcement:", error);
+    }
+  };
+
+  // === RENDER APPLICATION UI ===
   return (
     <>
       <Router>
         <div className="min-h-screen bg-white">
+          {/* Top navigation bar with user info */}
           <Nav userName={userName} photoURL={photoURL} />
+
+          {/* Side navigation with client selection for admins */}
           <Sidebar
             isAdmin={isAdmin}
             setActiveClient={setActiveClient}
@@ -245,13 +371,22 @@ function App() {
             activeClientName={selectedClient?.name}
             activeClientPrice={selectedClient?.priceMowTrim}
             activeClientUid={selectedClient?.uid}
+            sideBarOpen={sideBarOpen}
+            toggleSidebar={toggleSidebar}
           />
-          <div className="min-h-screen w-full md:w-5/6 ml-auto p-4 sm:p-8">
+          {/* Main content area with routes */}
+          <div
+            className={`min-h-screen w-full ${
+              sideBarOpen ? "md:w-5/6" : ""
+            } ml-auto p-4 sm:p-8`}
+          >
             <Routes>
+              {/* Home/Dashboard Route */}
               <Route
                 path="/"
                 element={
                   isLoading ? (
+                    // Loading state with spinner
                     <div className="flex max-w-[1080px] mx-auto items-center flex-col">
                       <h1 className="text-3xl text-[#00954C] hidden sm:block font-bold mt-0 md:mt-4 mx-4">
                         Dashboard
@@ -268,6 +403,7 @@ function App() {
                       invoices={invoices}
                       serviceData={serviceData}
                       userName={userName}
+                      announcements={announcements}
                     />
                   )
                 }
@@ -351,6 +487,8 @@ function App() {
                       allClients={allClients}
                       setActiveClient={setActiveClient}
                       addClient={addClient}
+                      announcements={announcements}
+                      setAnnouncement={setAnnouncement}
                     />
                   )
                 }

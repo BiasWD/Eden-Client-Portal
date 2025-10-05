@@ -1,7 +1,8 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
+import { HiMenuAlt2 } from "react-icons/hi";
 
-function Sidebar({ isAdmin, setActiveClient, activeClient, activeClientName, activeClientPrice, activeClientUid }) {
+function Sidebar({ isAdmin, setActiveClient, activeClient, activeClientName, activeClientPrice, activeClientUid, sideBarOpen, toggleSidebar }) {
   const location = useLocation();
   const isActive = (path) => {
     return location.pathname === path
@@ -9,7 +10,19 @@ function Sidebar({ isAdmin, setActiveClient, activeClient, activeClientName, act
       : "bg-stone-700 hover:bg-stone-900";
   };
   return (
-    <div className="w-full md:w-1/6  md:bg-stone-800 border-b shadow-lg md:shadow-none border-stone-200 text-white md:rounded-br-xl h-auto md:min-h-screen flex flex-col md:absolute">
+    <>
+    <div className={`ml-auto ${!sideBarOpen ? "hidden md:flex" : "hidden"} pt-2 px-2 absolute`}>
+          <button onClick={toggleSidebar} className="cursor-pointer">
+            <HiMenuAlt2 size={24} />
+          </button>
+        </div>
+    <div className={`w-full md:w-1/6 ${sideBarOpen ? "" : "md:hidden"} md:bg-stone-800 border-b shadow-lg md:shadow-none border-stone-200 text-white md:rounded-br-xl h-auto md:min-h-screen flex flex-col md:absolute`}>
+        <div className="ml-auto pt-2 px-2">
+          <button onClick={toggleSidebar} className="cursor-pointer">
+            <HiMenuAlt2 size={24} />
+          </button>
+        </div>
+        <hr className="hidden md:block border-t border-stone-500 mx-2" />
       <div className="flex flex-row md:flex-col gap-2 p-2">
       <Link to={isAdmin ? "admin-dashboard" : "/"} className="w-full"
         onClick={isAdmin ? () => setActiveClient("") : undefined}>
@@ -51,6 +64,7 @@ function Sidebar({ isAdmin, setActiveClient, activeClient, activeClientName, act
         ) : (undefined)}
       </div>
     </div>
+    </>
   );
 }
 

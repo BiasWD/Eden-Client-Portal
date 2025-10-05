@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { FaLock, FaArrowRight } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
-function Dashboard({ invoices, serviceData, userName, hasClientData }) {
+function Dashboard({ invoices, serviceData, userName, hasClientData, announcements }) {
   const [totalDue, setTotalDue] = useState(0);
 
   useEffect(() => {
@@ -65,7 +65,9 @@ function Dashboard({ invoices, serviceData, userName, hasClientData }) {
             Announcements
           </div>
           <p className="p-4 md:text-lg text-center md:text-left bg-white w-full align-center">
-            No new announcements
+            {announcements.length > 0
+              ? announcements[0].message
+              : "No new announcements"}
           </p>
         </div>
 
