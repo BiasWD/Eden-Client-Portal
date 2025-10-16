@@ -29,7 +29,7 @@ function Services({
   const [addServiceDate, setAddServiceDate] = useState("");
 
   const service = {
-    date: new Date(addServiceDate),
+    date: new Date(addServiceDate + "T00:00:00"),
     type: addServiceType,
   };
 
