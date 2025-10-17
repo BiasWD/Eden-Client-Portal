@@ -13,7 +13,11 @@ function AdminDashboard({
 }) {
   let totalDue = 0;
 
+  const currentMonth = new Date().getMonth();
+  const currentYear = new Date().getFullYear();
+
   const clientList = allClients.map((client, index) => {
+
     let amountDue = 0;
     for (let invoice of client.invoices) {
       if (!invoice.isPaid) {
@@ -22,6 +26,17 @@ function AdminDashboard({
     }
 
     totalDue += amountDue;
+
+    let servicesThisMonth = 0;
+    for (let service of client.serviceHistory) {
+      const serviceDate = service.date.toDate();
+      if (
+        serviceDate.getMonth() === currentMonth &&
+        serviceDate.getFullYear() === currentYear
+      ) {
+        servicesThisMonth++;
+      }
+    }
 
     return (
       <div
@@ -37,12 +52,14 @@ function AdminDashboard({
           </div>
         </div>
         <div className="flex flex-1 flex-col text-center justify-center">
-          <div className="text-sm text-stone-500">Amount Due:</div>
+          <div className="text-sm underline text-stone-500">Amount Due</div>
           <div className="text-lg font-semibold text-stone-700">
             <span className={`${amountDue > 0 ? "font-extrabold" : ""}`}>
               ${amountDue}
             </span>
           </div>
+          <div className="text-sm underline text-stone-500">Services This Month</div>
+          <div className="flex items-center justify-center">{Array.from({length:servicesThisMonth}).map((_, index) => (<span key={index}className="h-3 w-3 m-[2px] inline-block bg-[#00954C] rounded-full"></span>))}</div>
         </div>
         <div className="flex flex-1 flex-row flex-wrap gap-2 items-center justify-center">
           <Link to={"/payments"} className="w-full flex flex-1 sm:w-auto">
