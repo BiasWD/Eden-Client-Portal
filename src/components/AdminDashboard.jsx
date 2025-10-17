@@ -58,7 +58,7 @@ function AdminDashboard({
               ${amountDue}
             </span>
           </div>
-          <div className="text-sm underline text-stone-500">Services This Month</div>
+          <div className="text-xs md:text-sm text-stone-500">Services This Month</div>
           <div className="flex items-center justify-center">{Array.from({length:servicesThisMonth}).map((_, index) => (<span key={index}className="h-3 w-3 m-[2px] inline-block bg-[#00954C] rounded-full"></span>))}</div>
         </div>
         <div className="flex flex-1 flex-row flex-wrap gap-2 items-center justify-center">
